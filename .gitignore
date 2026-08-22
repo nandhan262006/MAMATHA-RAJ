@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tooling / scratch files
+/venv/
+/downloads/
+/download_instagram.py
+/INV-1001.pdf
+/ABOUT.jpeg
+/RESPONSIVE-ISSUES.md
+
+# scratch exports
+/0725990f-ef8c-4060-8abd-c47631aa71a0.jpeg

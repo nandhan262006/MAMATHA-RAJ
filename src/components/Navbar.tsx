@@ -1,0 +1,155 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+const LINKS = [
+  { href: "#about", label: "About" },
+  { href: "#gallery", label: "Portfolio" },
+  { href: "#services", label: "Services" },
+  { href: "#testimonials", label: "Reviews" },
+  { href: "#contact", label: "Contact" },
+];
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onClick = (e: Event) => {
+      e.preventDefault();
+      const href = (e.currentTarget as HTMLAnchorElement).getAttribute("href");
+      if (!href) return;
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      setOpen(false);
+    };
+    document.querySelectorAll('a[href^="#"]').forEach((a) =>
+      a.addEventListener("click", onClick as EventListener)
+    );
+    return () => {
+      document.querySelectorAll('a[href^="#"]').forEach((a) =>
+        a.removeEventListener("click", onClick as EventListener)
+      );
+    };
+  }, []);
+
+  return (
+    <nav
+      className={`nav ${scrolled ? "scrolled" : ""}`}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        padding: open ? "1rem clamp(1rem, 4vw, 3rem)" : scrolled ? "1rem clamp(1rem, 4vw, 3rem)" : "1.5rem clamp(1rem, 4vw, 3rem)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        background: "rgba(250, 246, 241, 0.97)",
+        backdropFilter: "blur(20px)",
+        boxShadow: "0 1px 0 rgba(26,23,20,0.06)",
+        transition: "padding 0.4s ease",
+      }}
+    >
+      <a
+        href="#home"
+        className="nav-logo"
+        style={{
+          fontFamily: "var(--font-serif)",
+          fontSize: "1.6rem",
+          letterSpacing: "0.08em",
+          color: "var(--color-fg)",
+          textDecoration: "none",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.6rem",
+        }}
+      >
+        <img
+          src="/logo.png"
+          alt="Mamatha Raj logo"
+          style={{ height: 40, width: "auto", display: "block" }}
+        />
+        Mamatha <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>Raj</em>
+      </a>
+
+      <ul
+        className={`nav-links ${open ? "open" : ""}`}
+        style={{
+          display: "flex",
+          gap: "2.5rem",
+          listStyle: "none",
+          alignItems: "center",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        {LINKS.map((link) => (
+          <li key={link.href}>
+            <a
+              href={link.href}
+              className="nav-link-item"
+              style={{
+                fontSize: "0.8rem",
+                fontWeight: 500,
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+                color: "var(--color-fg-muted)",
+                textDecoration: "none",
+                transition: "color 0.3s",
+                position: "relative",
+              }}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href="#contact"
+            className="nav-cta"
+            style={{
+              fontSize: "0.8rem",
+              fontWeight: 500,
+              textTransform: "uppercase",
+              letterSpacing: "0.12em",
+              color: "var(--color-cream)",
+              background: "var(--color-accent)",
+              padding: "0.7rem 1.6rem",
+              textDecoration: "none",
+              transition: "background 0.3s",
+            }}
+          >
+            Book Now
+          </a>
+        </li>
+      </ul>
+
+      <button
+        className={`hamburger ${open ? "active" : ""}`}
+        aria-label="Menu"
+        onClick={() => setOpen(!open)}
+        style={{
+          display: "none",
+          flexDirection: "column",
+          gap: 5,
+          cursor: "pointer",
+          zIndex: 1001,
+          background: "none",
+          border: "none",
+        }}
+      >
+        <span style={{ width: 24, height: 1.5, background: "var(--color-fg)", transition: "all 0.3s" }} />
+        <span style={{ width: 24, height: 1.5, background: "var(--color-fg)", transition: "all 0.3s" }} />
+        <span style={{ width: 24, height: 1.5, background: "var(--color-fg)", transition: "all 0.3s" }} />
+      </button>
+    </nav>
+  );
+}
