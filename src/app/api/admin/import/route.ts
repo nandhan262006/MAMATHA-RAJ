@@ -8,7 +8,7 @@ import { uploadImage } from "@/lib/r2";import {
 import { isAuthenticated } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 3600;
+export const maxDuration = 300;
 
 const CONCURRENCY = 5;
 const DRIVE_IMPORT_CAP = 500;

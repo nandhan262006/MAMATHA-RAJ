@@ -2,7 +2,7 @@ import Reveal from "./Reveal";
 
 const MAPS_URL = "https://maps.app.goo.gl/Ni1ogCMpSQ1qbjw9A";
 const EMBED_SRC =
-  "https://www.google.com/maps?q=17.2419046,80.1315073&z=16&output=embed";
+  "https://maps.google.com/maps?q=Mamatharaj%20Photography%2C%20Pumping%20Well%20Road%2C%20Khammam%2C%20Telangana&z=16&hl=en&output=embed";
 
 export default function Map() {
   return (
@@ -26,7 +26,7 @@ export default function Map() {
             marginBottom: "1rem",
           }}
         >
-          Visit the Studio
+          Visit Our Studio
         </p>
       </Reveal>
       <Reveal delay={1}>
@@ -39,9 +39,9 @@ export default function Map() {
             color: "var(--color-cream)",
           }}
         >
-          Find Us in{" "}
+          Mamatharaj{" "}
           <em style={{ fontStyle: "italic", color: "var(--color-accent-light)" }}>
-            Khammam
+            Photography
           </em>
         </h2>
       </Reveal>
