@@ -42,7 +42,7 @@ export default function Hero({ images }: { images: string[] }) {
           zIndex: 0,
           display: "grid",
           gridTemplateColumns: "repeat(8, 1fr)",
-          gap: 3,
+          gap: 0,
         }}
       >
         {(images.length > 0 ? images : Array(24).fill("")).map((src, i) => (
