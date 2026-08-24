@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { href: "/admin/portfolio", label: "Portfolio" },
   { href: "/admin/story", label: "Featured Story" },
   { href: "/admin/services", label: "Services" },
+  { href: "/admin/testimonials", label: "Testimonials" },
 ];
 
 export default function SidebarNav() {

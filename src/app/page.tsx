@@ -15,17 +15,19 @@ import { getAboutContent } from "@/lib/about";
 import { getFeaturedPhotos } from "@/lib/photos";
 import { getServices } from "@/lib/services";
 import { getStoryContent } from "@/lib/story";
+import { getTestimonials } from "@/lib/testimonials";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [heroImages, aboutContent, featuredPhotos, services, storyContent] =
+  const [heroImages, aboutContent, featuredPhotos, services, storyContent, testimonials] =
     await Promise.all([
       getHeroImages(),
       getAboutContent(),
       getFeaturedPhotos(),
       getServices(),
       getStoryContent(),
+      getTestimonials(),
     ]);
 
   return (
@@ -36,7 +38,15 @@ export default async function Home() {
       <Gallery photos={featuredPhotos} />
       <Services services={services} />
       <Featured content={storyContent} />
-      <Testimonials />
+      <Testimonials
+        slides={testimonials.map((t) => ({
+          img: t.imageUrl,
+          ratio: t.ratio,
+          quote: t.quote,
+          author: t.author,
+          role: t.role,
+        }))}
+      />
       <Process />
         <CtaBanner />
         <Map />

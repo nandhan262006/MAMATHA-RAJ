@@ -3,7 +3,15 @@
 import { useEffect, useState } from "react";
 import Reveal from "./Reveal";
 
-const SLIDES = [
+export type TestimonialSlide = {
+  img: string;
+  ratio: string;
+  quote: string;
+  author: string;
+  role: string;
+};
+
+const FALLBACK_SLIDES: TestimonialSlide[] = [
   {
     img: "/downloads/2026-07-20_07-34-52_UTC_2.jpg",
     ratio: "2743/1837",
@@ -30,9 +38,13 @@ const SLIDES = [
   },
 ];
 
-export default function Testimonials() {
+export default function Testimonials({
+  slides = FALLBACK_SLIDES,
+}: {
+  slides?: TestimonialSlide[];
+}) {
   const [current, setCurrent] = useState(0);
-  const total = SLIDES.length;
+  const total = Math.max(slides.length, 1);
 
   const goToSlide = (index: number) => {
     setCurrent(((index % total) + total) % total);
@@ -44,7 +56,7 @@ export default function Testimonials() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
-  const slide = SLIDES[current];
+  const slide = slides[current] ?? FALLBACK_SLIDES[0];
 
   return (
     <section
@@ -106,7 +118,7 @@ export default function Testimonials() {
                 style={{
                   width: "100%",
                   maxWidth: 320,
-                  aspectRatio: slide.ratio,
+                  aspectRatio: slide.ratio || "3/4",
                   overflow: "hidden",
                   flexShrink: 0,
                 }}
@@ -157,7 +169,7 @@ export default function Testimonials() {
                 justifyContent: "center",
               }}
             >
-              {SLIDES.map((_, i) => (
+              {slides.map((_, i) => (
                 <button
                   key={i}
                   aria-label={`Slide ${i + 1}`}
