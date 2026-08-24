@@ -126,6 +126,7 @@ export async function replaceStoryImage(
     }
   } catch (e) {
     console.error("site_content image write failed:", e);
+    await deleteImage(uploaded.key).catch(() => {});
     return {
       status: "error",
       message:

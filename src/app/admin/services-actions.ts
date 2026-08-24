@@ -83,6 +83,7 @@ export async function replaceServiceImage(
       args: [id],
     });
     if (existing.rows.length === 0) {
+      await deleteImage(uploaded.key).catch(() => {});
       return { status: "error", message: "Service card not found." };
     }
 
@@ -98,6 +99,7 @@ export async function replaceServiceImage(
     }
   } catch (e) {
     console.error("services image write failed:", e);
+    await deleteImage(uploaded.key).catch(() => {});
     return {
       status: "error",
       message:

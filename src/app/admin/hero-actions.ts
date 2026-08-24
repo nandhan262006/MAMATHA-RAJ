@@ -69,6 +69,7 @@ export async function replaceHeroImage(
     }
   } catch (e) {
     console.error("hero_images write failed:", e);
+    await deleteImage(uploaded.key).catch(() => {});
     return {
       status: "error",
       message:

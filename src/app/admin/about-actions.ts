@@ -100,6 +100,7 @@ export async function replaceAboutImage(
     }
   } catch (e) {
     console.error("about_content image write failed:", e);
+    await deleteImage(uploaded.key).catch(() => {});
     return {
       status: "error",
       message:

@@ -6,26 +6,34 @@ import type { AboutContent } from "@/lib/about";
 
 function Stat({ value, label }: { value: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [display, setDisplay] = useState("0");
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [display, setDisplay] = useState(() => {
+    const num = parseInt(value, 10);
+    return Number.isNaN(num) ? value : "0";
+  });
   const started = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const num = parseInt(value, 10);
+    const suffix = value.replace(/[0-9]/g, "");
+
+    if (Number.isNaN(num)) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !started.current) {
             started.current = true;
-            const num = parseInt(value);
-            const suffix = value.replace(/[0-9]/g, "");
             let current = 0;
-            const step = Math.ceil(num / 40);
-            const timer = setInterval(() => {
+            const step = Math.max(1, Math.ceil(num / 40));
+            timerRef.current = setInterval(() => {
               current += step;
               if (current >= num) {
                 current = num;
-                clearInterval(timer);
+                if (timerRef.current) clearInterval(timerRef.current);
               }
               setDisplay(current + suffix);
             }, 30);
@@ -36,7 +44,11 @@ function Stat({ value, label }: { value: string; label: string }) {
       { threshold: 0.5 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [value]);
 
   return (

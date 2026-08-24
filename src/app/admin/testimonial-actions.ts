@@ -90,6 +90,7 @@ export async function replaceTestimonialImage(
       args: [id],
     });
     if (existing.rows.length === 0) {
+      await deleteImage(uploaded.key).catch(() => {});
       return { status: "error", message: "Testimonial not found." };
     }
 
@@ -105,6 +106,7 @@ export async function replaceTestimonialImage(
     }
   } catch (e) {
     console.error("testimonials image write failed:", e);
+    await deleteImage(uploaded.key).catch(() => {});
     return {
       status: "error",
       message:
