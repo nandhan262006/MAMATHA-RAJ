@@ -22,7 +22,7 @@ export default function Map() {
             fontWeight: 600,
             textTransform: "uppercase",
             letterSpacing: "0.3em",
-            color: "var(--color-accent-light)",
+            color: "var(--color-accent)",
             marginBottom: "1rem",
           }}
         >
@@ -36,11 +36,11 @@ export default function Map() {
             fontSize: "clamp(2.25rem, 5vw, 4rem)",
             fontWeight: 300,
             lineHeight: 1.15,
-            color: "var(--color-cream)",
+            color: "var(--color-charcoal)",
           }}
         >
           Mamatharaj{" "}
-          <em style={{ fontStyle: "italic", color: "var(--color-accent-light)" }}>
+          <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>
             Photography
           </em>
         </h2>
@@ -52,9 +52,9 @@ export default function Map() {
           style={{
             maxWidth: 1100,
             margin: "clamp(2rem, 4vw, 3.5rem) auto 0",
-            border: "1px solid rgba(255,249,242,0.08)",
+            border: "1px solid rgba(44,40,36,0.12)",
             padding: 10,
-            background: "rgba(255,255,255,0.03)",
+            background: "rgba(255,255,255,0.5)",
           }}
         >
           <iframe
@@ -90,7 +90,7 @@ export default function Map() {
             style={{
               fontFamily: "var(--font-serif)",
               fontSize: "1.05rem",
-              color: "rgba(255,249,242,0.65)",
+              color: "rgba(44,40,36,0.7)",
               lineHeight: 1.6,
             }}
           >
@@ -105,7 +105,7 @@ export default function Map() {
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.12em",
-              color: "var(--color-accent-light)",
+              color: "var(--color-accent)",
               textDecoration: "none",
               whiteSpace: "nowrap",
             }}

@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
+const INSTAGRAM_URL = "https://instagram.com/mamatharaj.studio";
+
 const LINKS = [
   { href: "#about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "#services", label: "Services" },
   { href: "#testimonials", label: "Reviews" },
   { href: "#contact", label: "Contact" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export default function Navbar() {
@@ -114,6 +117,41 @@ export default function Navbar() {
             </a>
           </li>
         ))}
+        <li>
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="nav-insta"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 38,
+              height: 38,
+              borderRadius: "50%",
+              border: "1px solid rgba(26,23,20,0.15)",
+              color: "var(--color-fg)",
+              textDecoration: "none",
+              transition: "all 0.3s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--color-accent)";
+              e.currentTarget.style.color = "var(--color-accent)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "rgba(26,23,20,0.15)";
+              e.currentTarget.style.color = "var(--color-fg)";
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="17" height="17">
+              <rect x="2" y="2" width="20" height="20" rx="5" />
+              <circle cx="12" cy="12" r="5" />
+              <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+        </li>
         <li>
           <a
             href="#contact"
