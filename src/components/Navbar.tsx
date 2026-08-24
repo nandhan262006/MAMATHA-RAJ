@@ -19,6 +19,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const isHome = pathname === "/";
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && !isHome ? `/${href}` : href;
+
   useEffect(() => {
     if (pathname.startsWith("/admin")) return;
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -65,7 +69,7 @@ export default function Navbar() {
       }}
     >
       <a
-        href="#home"
+        href={isHome ? "#home" : "/"}
         className="nav-logo"
         style={{
           fontFamily: "var(--font-serif)",
@@ -100,7 +104,7 @@ export default function Navbar() {
         {LINKS.map((link) => (
           <li key={link.href}>
             <a
-              href={link.href}
+              href={resolveHref(link.href)}
               className="nav-link-item"
               style={{
                 fontSize: "0.8rem",
@@ -154,7 +158,7 @@ export default function Navbar() {
         </li>
         <li>
           <a
-            href="#contact"
+            href={resolveHref("#contact")}
             className="nav-cta"
             style={{
               fontSize: "0.8rem",
