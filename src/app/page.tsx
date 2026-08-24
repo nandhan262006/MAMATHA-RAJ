@@ -7,6 +7,7 @@ import Featured from "@/components/Featured";
 import Testimonials from "@/components/Testimonials";
 import Process from "@/components/Process";
 import CtaBanner from "@/components/CtaBanner";
+import Map from "@/components/Map";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getHeroImages } from "@/lib/hero-images";
@@ -37,8 +38,9 @@ export default async function Home() {
       <Featured content={storyContent} />
       <Testimonials />
       <Process />
-      <CtaBanner />
-      <Contact />
+        <CtaBanner />
+        <Map />
+        <Contact />
       <Footer />
     </main>
   );
