@@ -62,8 +62,7 @@ export default function Navbar() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        background: "rgba(250, 246, 241, 0.97)",
-        backdropFilter: "blur(20px)",
+        background: "rgba(250, 246, 241, 0.98)",
         boxShadow: "0 1px 0 rgba(26,23,20,0.06)",
         transition: "padding 0.4s ease",
       }}
