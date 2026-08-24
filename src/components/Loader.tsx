@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const LETTERS = "Mamatha Raj".split("");
 
@@ -13,10 +14,12 @@ function hasShownBefore(): boolean {
 }
 
 export default function Loader() {
+  const pathname = usePathname();
   const [fading, setFading] = useState(false);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
+    if (pathname.startsWith("/admin")) return;
     if (!hasShownBefore()) {
       try {
         sessionStorage.setItem("loaderShown", "1");
@@ -24,7 +27,7 @@ export default function Loader() {
     }
     const t = setTimeout(() => setFading(true), hasShownBefore() ? 150 : 2200);
     return () => clearTimeout(t);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     if (!fading) return;
@@ -40,7 +43,7 @@ export default function Loader() {
     };
   }, [gone]);
 
-  if (gone) return null;
+  if (gone || pathname.startsWith("/admin")) return null;
 
   return (
     <div className={`loader ${fading ? "hidden" : ""}`} aria-hidden={fading || undefined}>

@@ -1,47 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import Reveal from "./Reveal";
 
-const ITEMS = [
-  {
-    src: "/downloads/2026-07-08_11-13-43_UTC_1.jpg",
-    category: "wedding",
-    title: "Ananya & Rohit",
-    cat: "Wedding · Udaipur",
-  },
-  {
-    src: "/downloads/2026-07-08_11-19-45_UTC_1.jpg",
-    category: "prewedding",
-    title: "Priya & Arjun",
-    cat: "Pre-Wedding · Jaipur",
-  },
-  {
-    src: "/downloads/2026-07-20_07-34-52_UTC_1.jpg",
-    category: "wedding",
-    title: "Meera & Vikram",
-    cat: "Wedding · Goa",
-  },
-  {
-    src: "/downloads/2026-07-30_13-29-10_UTC_1.jpg",
-    category: "portrait",
-    title: "Kavya Solo",
-    cat: "Portrait · Studio",
-  },
-  {
-    src: "/downloads/2026-06-18_06-13-07_UTC_2.jpg",
-    category: "prewedding",
-    title: "Nisha & Karthik",
-    cat: "Pre-Wedding · Ooty",
-  },
-  {
-    src: "/downloads/2026-06-19_06-12-31_UTC_2.jpg",
-    category: "wedding",
-    title: "Divya & Suresh",
-    cat: "Wedding · Hyderabad",
-  },
-];
-
-export default function Gallery() {
+export default function Gallery({
+  photos,
+}: {
+  photos: { src: string; thumb?: string | null }[];
+}) {
   return (
     <section
       className="section gallery"
@@ -102,9 +68,9 @@ export default function Gallery() {
             transition: "opacity 0.3s",
           }}
         >
-          {ITEMS.map((item) => (
+          {photos.map((photo, i) => (
             <div
-              key={item.src}
+              key={`${photo.src}-${i}`}
               className="gallery-item"
               style={{
                 position: "relative",
@@ -113,52 +79,22 @@ export default function Gallery() {
                 breakInside: "avoid",
               }}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={item.src}
-                alt={item.title}
+                src={photo.thumb || photo.src}
+                alt={`Photograph ${i + 1}`}
                 loading="lazy"
+                decoding="async"
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
-              <div
-                className="gallery-item-overlay"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(180deg, transparent 40%, rgba(26,23,20,0.7) 100%)",
-                  opacity: 0,
-                  transition: "opacity 0.4s ease",
-                  display: "flex",
-                  alignItems: "flex-end",
-                  padding: "1.5rem",
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-serif)",
-                      fontSize: "1.1rem",
-                      color: "var(--color-cream)",
-                    }}
-                  >
-                    {item.title}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.65rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.15em",
-                      opacity: 0.7,
-                      color: "var(--color-cream)",
-                      marginTop: "0.25rem",
-                    }}
-                  >
-                    {item.cat}
-                  </div>
-                </div>
-              </div>
             </div>
           ))}
+        </div>
+
+        <div style={{ marginTop: "4rem", textAlign: "center" }}>
+          <Link href="/portfolio" className="btn-primary">
+            <span>View Full Portfolio</span>
+          </Link>
         </div>
       </div>
     </section>

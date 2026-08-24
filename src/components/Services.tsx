@@ -2,62 +2,19 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
+import type { ServiceCard } from "@/lib/services";
 
 const ROTATE_MS = 5000;
-
-const SERVICES = [
-  {
-    num: "01",
-    category: "Wedding",
-    title: "Wedding Photography",
-    desc: "From the mehendi to the vidai, we capture every emotion of your big day with a blend of candid storytelling and editorial precision.",
-    img: "/downloads/2026-07-08_11-13-43_UTC_1.jpg",
-  },
-  {
-    num: "02",
-    category: "Pre-Wedding",
-    title: "Pre-Wedding Shoots",
-    desc: "Dreamy, cinematic pre-wedding films and photographs at breathtaking locations across India. Your love story, beautifully framed.",
-    img: "/downloads/2026-07-08_11-19-45_UTC_1.jpg",
-  },
-  {
-    num: "03",
-    category: "Portrait",
-    title: "Portrait Sessions",
-    desc: "Studio and outdoor portraits that capture your authentic self. Individual, couple, or family — timeless images for timeless memories.",
-    img: "/downloads/2026-07-30_13-29-10_UTC_1.jpg",
-  },
-  {
-    num: "04",
-    category: "Films",
-    title: "Cinematic Films",
-    desc: "Short films and highlight reels that bring your celebration to life. Professional-grade video with a documentary soul.",
-    img: "/downloads/2026-07-20_07-34-52_UTC_1.jpg",
-  },
-  {
-    num: "05",
-    category: "Events",
-    title: "Event Coverage",
-    desc: "Corporate events, cultural celebrations, and milestone moments — captured with discretion and artistic flair.",
-    img: "/downloads/2026-06-19_06-12-31_UTC_2.jpg",
-  },
-  {
-    num: "06",
-    category: "Destination",
-    title: "Destination Shoots",
-    desc: "We travel anywhere your story takes us. From the palaces of Rajasthan to the beaches of Kerala — your vision, our lens.",
-    img: "/downloads/2026-06-18_06-13-07_UTC_2.jpg",
-  },
-];
 
 const CARD_W = "min(300px, 65vw)";
 const CARD_H = "min(400px, 87vw)";
 
-export default function Services() {
+export default function Services({ services }: { services: ServiceCard[] }) {
+  const visible = services.filter((s) => s.imageUrl);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const dragX = useRef<number | null>(null);
-  const n = SERVICES.length;
+  const n = Math.max(visible.length, 1);
 
   const go = useCallback(
     (i: number) => setActive(((i % n) + n) % n),
@@ -132,7 +89,7 @@ export default function Services() {
           }}
           onPointerCancel={() => { dragX.current = null; }}
         >
-          {SERVICES.map((service, i) => {
+          {visible.map((service, i) => {
             const diff = ((i - active) % n + n) % n;
             const offset = diff > n / 2 ? diff - n : diff;
             const abs = Math.abs(offset);
@@ -140,7 +97,7 @@ export default function Services() {
 
             return (
               <button
-                key={service.title}
+                key={service.id}
                 type="button"
                 onClick={() => go(i)}
                 aria-label={`View ${service.title}`}
@@ -171,7 +128,7 @@ export default function Services() {
                   }}
                 >
                   <img
-                    src={service.img}
+                    src={service.imageUrl}
                     alt={service.title}
                     loading="lazy"
                     style={{
@@ -232,7 +189,7 @@ export default function Services() {
                         overflow: "hidden",
                       }}
                     >
-                      {service.desc}
+                      {service.description}
                     </p>
                   </div>
                 </div>
@@ -283,7 +240,7 @@ export default function Services() {
             </button>
 
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              {SERVICES.map((_, i) => (
+              {visible.map((_, i) => (
                 <button
                   key={i}
                   type="button"

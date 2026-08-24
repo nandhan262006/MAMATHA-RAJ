@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function Hero() {
+export default function Hero({ images }: { images: string[] }) {
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
@@ -45,32 +45,7 @@ export default function Hero() {
           gap: 3,
         }}
       >
-        {[
-          "/downloads/2026-07-08_11-13-43_UTC_1.jpg",
-          "/downloads/2026-07-08_11-13-43_UTC_2.jpg",
-          "/downloads/2026-06-18_06-13-07_UTC_2.jpg",
-          "/downloads/2026-07-20_07-34-52_UTC_1.jpg",
-          "/downloads/2026-07-30_13-29-10_UTC_1.jpg",
-          "/downloads/2026-06-19_06-12-31_UTC_2.jpg",
-          "/downloads/2026-07-08_11-19-45_UTC_1.jpg",
-          "/downloads/2026-06-18_06-13-07_UTC_3.jpg",
-          "/downloads/2026-07-08_11-13-43_UTC_3.jpg",
-          "/downloads/2026-07-20_07-34-52_UTC_2.jpg",
-          "/downloads/2026-07-30_13-29-10_UTC_2.jpg",
-          "/downloads/2026-06-19_06-12-31_UTC_3.jpg",
-          "/downloads/2026-07-08_11-13-43_UTC_4.jpg",
-          "/downloads/2026-07-08_11-19-45_UTC_2.jpg",
-          "/downloads/2026-06-18_06-13-07_UTC_1.jpg",
-          "/downloads/2026-07-30_13-29-10_UTC_3.jpg",
-          "/downloads/2026-07-08_11-13-43_UTC_5.jpg",
-          "/downloads/2026-07-20_07-34-52_UTC_3.jpg",
-          "/downloads/2026-06-19_06-12-31_UTC_1.jpg",
-          "/downloads/2026-07-08_11-19-45_UTC_3.jpg",
-          "/downloads/2026-07-30_13-29-10_UTC_4.jpg",
-          "/downloads/2023-11-22_08-28-05_UTC.jpg",
-          "/downloads/2026-06-18_06-13-07_UTC_2.jpg",
-          "/downloads/2026-07-08_11-13-43_UTC_1.jpg",
-        ].map((src, i) => (
+        {(images.length > 0 ? images : Array(24).fill("")).map((src, i) => (
           <div key={i} style={{ overflow: "hidden", background: "#1a1714", aspectRatio: "3/4" }}>
             <img
               src={src}

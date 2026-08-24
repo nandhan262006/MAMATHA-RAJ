@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
+import type { AboutContent } from "@/lib/about";
 
 function Stat({ value, label }: { value: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -67,7 +68,22 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-export default function About() {
+function HeadingWithAccent({ text }: { text: string }) {
+  const words = text.trim().split(/\s+/);
+  if (words.length < 2) return <>{text}</>;
+  const last = words[words.length - 1];
+  const rest = words.slice(0, -1).join(" ");
+  return (
+    <>
+      {rest}{" "}
+      <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>
+        {last}
+      </em>
+    </>
+  );
+}
+
+export default function About({ content }: { content: AboutContent }) {
   return (
     <section
       className="section about"
@@ -96,7 +112,7 @@ export default function About() {
             }}
           >
             <img
-              src="/ABOUT.jpeg"
+              src={content.imageUrl}
               alt="Photographer at work"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
@@ -127,7 +143,7 @@ export default function About() {
                 marginBottom: "1rem",
               }}
             >
-              About the Studio
+              {content.label}
             </p>
           </Reveal>
           <Reveal delay={1}>
@@ -141,10 +157,7 @@ export default function About() {
                 marginBottom: "1.5rem",
               }}
             >
-              Where Light Meets{" "}
-              <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>
-                Emotion
-              </em>
+              <HeadingWithAccent text={content.heading} />
             </h2>
           </Reveal>
           <Reveal delay={2}>
@@ -156,10 +169,7 @@ export default function About() {
                 fontSize: "1rem",
               }}
             >
-              Founded in the heart of India, Mamatha Raj was born from a deep
-              passion for visual storytelling. We believe that every celebration
-              — every laugh, every tear, every stolen glance — deserves to be
-              immortalized with cinematic precision.
+              {content.paragraph1}
             </p>
           </Reveal>
           <Reveal delay={3}>
@@ -171,10 +181,7 @@ export default function About() {
                 fontSize: "1rem",
               }}
             >
-              With over a decade of experience and hundreds of weddings captured
-              across India, our team brings an editorial eye and a documentary
-              soul to every project. We don&apos;t just take photographs; we
-              craft visual narratives that resonate for generations.
+              {content.paragraph2}
             </p>
           </Reveal>
           <Reveal delay={3}>
@@ -188,9 +195,9 @@ export default function About() {
               borderTop: "1px solid rgba(26,23,20,0.08)",
               }}
             >
-              <Stat value="500+" label="Weddings Captured" />
-              <Stat value="12+" label="Years of Craft" />
-              <Stat value="35+" label="Cities Covered" />
+              {content.stats.map((stat, i) => (
+                <Stat key={i} value={stat.value} label={stat.label} />
+              ))}
             </div>
           </Reveal>
         </div>

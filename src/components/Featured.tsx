@@ -1,15 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import Reveal from "./Reveal";
+import type { StoryContent } from "@/lib/story";
 
-const DETAILS = [
-  { label: "Couple", value: "Ananya & Rohit" },
-  { label: "Location", value: "Udaipur, Rajasthan" },
-  { label: "Duration", value: "3 Days" },
-  { label: "Photos Delivered", value: "1,200+" },
-];
-
-export default function Featured() {
+export default function Featured({ content }: { content: StoryContent }) {
+  const DETAILS = content.details;
   return (
     <section
       id="featured"
@@ -21,8 +17,8 @@ export default function Featured() {
       {/* ── Top: Full-width hero image ── */}
       <div style={{ position: "relative", width: "100%", height: "clamp(400px, 60vw, 700px)", overflow: "hidden" }}>
         <img
-          src="/downloads/2026-07-08_11-13-43_UTC_2.jpg"
-          alt="Wedding venue"
+          src={content.imageUrl}
+          alt={content.label}
           loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
@@ -53,7 +49,7 @@ export default function Featured() {
                 marginBottom: "1rem",
               }}
             >
-              Featured Story
+              {content.label}
             </p>
           </Reveal>
           <Reveal delay={1}>
@@ -66,9 +62,9 @@ export default function Featured() {
                 color: "var(--color-cream)",
               }}
             >
-              A Royal Affair in{" "}
+              {content.headingPlain}{" "}
               <em style={{ fontStyle: "italic", color: "var(--color-accent-light)" }}>
-                Udaipur
+                {content.headingAccent}
               </em>
             </h2>
           </Reveal>
@@ -98,9 +94,7 @@ export default function Featured() {
                 maxWidth: 480,
               }}
             >
-              The grandeur of a Rajasthani palace wedding — where centuries of
-              tradition met modern elegance. Every corner held a story, every
-              moment was pure magic.
+              {content.description}
             </p>
           </Reveal>
           <Reveal delay={1}>
@@ -141,13 +135,13 @@ export default function Featured() {
             </div>
           </Reveal>
           <Reveal delay={2}>
-            <a
-              href="#contact"
+            <Link
+              href="/story"
               className="btn-primary"
               style={{ marginTop: "2.5rem" }}
             >
-              <span>View Full Gallery</span>
-            </a>
+              <span>{content.buttonText}</span>
+            </Link>
           </Reveal>
         </div>
 
@@ -161,7 +155,7 @@ export default function Featured() {
           >
             <div style={{ overflow: "hidden", aspectRatio: "3/4", marginTop: "3rem" }}>
               <img
-                src="/downloads/2026-07-08_11-13-43_UTC_3.jpg"
+                src={content.small1Url}
                 alt="Wedding details"
                 loading="lazy"
                 style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease" }}
@@ -171,7 +165,7 @@ export default function Featured() {
             </div>
             <div style={{ overflow: "hidden", aspectRatio: "3/4" }}>
               <img
-                src="/downloads/2026-07-08_11-19-45_UTC_2.jpg"
+                src={content.small2Url}
                 alt="Wedding moments"
                 loading="lazy"
                 style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease" }}

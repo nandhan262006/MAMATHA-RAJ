@@ -1,24 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const LINKS = [
   { href: "#about", label: "About" },
-  { href: "#gallery", label: "Portfolio" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "#services", label: "Services" },
   { href: "#testimonials", label: "Reviews" },
   { href: "#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (pathname.startsWith("/admin")) return;
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     const onClick = (e: Event) => {

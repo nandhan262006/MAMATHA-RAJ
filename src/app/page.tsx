@@ -9,16 +9,32 @@ import Process from "@/components/Process";
 import CtaBanner from "@/components/CtaBanner";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { getHeroImages } from "@/lib/hero-images";
+import { getAboutContent } from "@/lib/about";
+import { getFeaturedPhotos } from "@/lib/photos";
+import { getServices } from "@/lib/services";
+import { getStoryContent } from "@/lib/story";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [heroImages, aboutContent, featuredPhotos, services, storyContent] =
+    await Promise.all([
+      getHeroImages(),
+      getAboutContent(),
+      getFeaturedPhotos(),
+      getServices(),
+      getStoryContent(),
+    ]);
+
   return (
     <main className="flex flex-1 flex-col">
-      <Hero />
+      <Hero images={heroImages.map((s) => s.url)} />
       <Marquee />
-      <About />
-      <Gallery />
-      <Services />
-      <Featured />
+      <About content={aboutContent} />
+      <Gallery photos={featuredPhotos} />
+      <Services services={services} />
+      <Featured content={storyContent} />
       <Testimonials />
       <Process />
       <CtaBanner />
