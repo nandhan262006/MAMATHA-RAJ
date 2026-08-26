@@ -27,7 +27,7 @@ const dmSans = DM_Sans({
   style: ["normal", "italic"],
 });
 
-const ogImageUrl = new URL("/og-image.jpg", SITE_URL).toString();
+const ogImageUrl = new URL("/og-image", SITE_URL).toString();
 
 const defaultTitle =
   "Mamatharaj Photography — Best Photographer in Khammam | Wedding & Portrait";
@@ -81,8 +81,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: ogImageUrl,
-        width: 2773,
-        height: 4160,
+        width: 1200,
+        height: 630,
         alt: "Mamatharaj Photography — Best Photographer in Khammam, Telangana",
       },
     ],

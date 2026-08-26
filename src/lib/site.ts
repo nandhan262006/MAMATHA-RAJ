@@ -143,7 +143,7 @@ export function buildLocalBusinessSchema(): Record<string, unknown> {
       "Mamatharaj Photography is the best wedding, pre-wedding and portrait photographer in Khammam, Telangana. 500+ weddings, 5.0-star Google rating, candid storytelling and editorial precision.",
     url: `${SITE_URL}/`,
     image: `${SITE_URL}/og-image.jpg`,
-    logo: `${SITE_URL}/og-image.jpg`,
+    logo: `${SITE_URL}/logo.png`,
     telephone: PHONE_TEL,
     email: EMAIL,
     priceRange: "₹₹",
@@ -304,7 +304,7 @@ export function buildWebSiteSchema(): Record<string, unknown> {
       "@type": "Organization",
       name: SITE_NAME,
       url: `${SITE_URL}/`,
-      logo: `${SITE_URL}/og-image.jpg`,
+      logo: `${SITE_URL}/logo.png`,
     },
     potentialAction: {
       "@type": "SearchAction",
