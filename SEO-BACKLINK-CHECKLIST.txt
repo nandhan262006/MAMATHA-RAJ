@@ -1,0 +1,181 @@
+==============================================================
+MAMATHARAJ PHOTOGRAPHY — SEO / LOCAL RANKING ACTION CHECKLIST
+Goal: Rank #1 for "best photographer in Khammam" /
+       "photography studio in Khammam"
+Site: https://mamatharajphotography.in
+==============================================================
+
+--------------------------------------------------------------
+WHAT'S ALREADY DONE (on the website, by code)
+--------------------------------------------------------------
+[x] Structured data (JSON-LD): LocalBusiness + Photographer,
+    reviews, services, address, geo, hours, FAQ, breadcrumbs
+[x] On-page SEO: keyword titles & meta descriptions on all pages
+[x] Canonical tags on every page
+[x] Sitemap.xml with all 12 URLs + hreflang + images
+[x] robots.txt (allows all crawlers)
+[x] llms.txt / llms-full.txt for AI search (ChatGPT, Claude, etc.)
+[x] Branded 1200x630 Open Graph share image
+[x] Google Maps embed fixed
+[x] NAP (name/address/phone) consistent in code
+
+You still need to do the OFFLINE / EXTERNAL steps below.
+On-site SEO alone will NOT get you to #1 — Google needs
+external signals (backlinks, reviews, business listing).
+
+--------------------------------------------------------------
+STEP 1 — SUBMIT SITEMAP (10 min, do this first)
+--------------------------------------------------------------
+Google Search Console:
+  1. Go to https://search.google.com/search-console
+  2. Add property (Domain type): mamatharajphotography.in
+     (you must verify ownership — DNS TXT record is easiest)
+  3. Left menu -> Sitemaps -> enter: sitemap.xml -> Submit
+  4. Also do "URL Inspection" on your homepage -> "Request Indexing"
+
+Bing Webmaster Tools:
+  1. Go to https://www.bing.com/webmasters
+  2. Import from Google Search Console (1 click)
+  3. Submit sitemap: sitemap.xml
+
+Yandex (optional, for India not needed): https://webmaster.yandex.com
+
+--------------------------------------------------------------
+STEP 2 — GOOGLE BUSINESS PROFILE (MOST IMPORTANT for local)
+--------------------------------------------------------------
+This is the #1 thing that makes you appear for
+"best photographer in Khammam" on Google Maps + local pack.
+
+1. Go to https://business.google.com
+2. Click "Add your business"
+3. Fill EXACTLY (must match your website everywhere):
+   Business name : Mamatharaj Photography
+   Category      : Photographer (also add: Wedding photographer)
+   Address       : 3-5-80/B, Pumping Well Road, Khammam,
+                   Telangana 507001
+   Phone         : +91 90106 27571
+   Website       : https://mamatharajphotography.in
+   Hours         : Mon–Sun, 10:00 AM – 7:00 PM
+4. Verify (postcard by mail, or phone/video)
+5. Add 15-20 real photos + logo + your OG image as cover
+6. Write a description with keywords:
+   "Mamatharaj Photography is the best wedding and portrait
+   photographer in Khammam. 500+ weddings, 5.0-star rating..."
+7. Add Services: wedding photography, pre-wedding, portrait,
+   cinematic films, event coverage, destination shoots
+8. POST weekly updates (Google loves active profiles)
+
+--------------------------------------------------------------
+STEP 3 — GET REVIEWS (biggest local ranking factor)
+--------------------------------------------------------------
+Google ranks you by quantity + recency + keywords in reviews.
+
+1. Create a short review link (from your Business Profile ->
+   "Ask for reviews" -> copy the link)
+2. After EVERY wedding/shoot, WhatsApp this message:
+
+   "Hi [Name]! Thank you for letting us capture your day. If
+   you loved the photos, could you leave us a quick Google
+   review? It takes 30 seconds: [review link] 🙏"
+
+3. Target: 50+ reviews (you have 21 now). Aim for 3-5/month.
+4. Reply to EVERY review (Google rewards responses).
+5. Encourage clients to mention "Khammam" and "wedding
+   photographer" naturally in the review text.
+
+--------------------------------------------------------------
+STEP 4 — FREE DIRECTORY CITATIONS (create your listing)
+--------------------------------------------------------------
+Sign up and list your business on ALL of these. Use the SAME
+name, address, phone on every one (NAP consistency = critical).
+
+India-specific:
+  - Justdial        https://www.justdial.com (Photographers > Khammam)
+  - Sulekha         https://www.sulekha.com
+  - IndiaMART       https://www.indiamart.com
+  - WedMeGood       https://www.wedmegood.com (big for weddings!)
+  - WeddingWire India https://www.weddingwire.in
+  - ShaadiSaga      https://www.shaadisaga.com
+  - CrazeMag        https://www.crazemag.com
+  - UrbanPro        https://www.urbanpro.com
+  - Yalwa           https://www.yalwa.in
+  - IndiaListed     https://www.indialisted.com
+
+Global (also help):
+  - Yelp            https://biz.yelp.com
+  - Facebook Page   https://www.facebook.com/pages/create
+  - Instagram       (already: @mamatharaj.studio)
+  - Pinterest       https://www.pinterest.com (business account)
+  - YouTube         (channel: post wedding teasers)
+  - LinkedIn        (company page)
+
+On each: add website link, phone, photos, and a description
+with the keyword "best photographer in Khammam".
+
+--------------------------------------------------------------
+STEP 5 — SOCIAL PROFILES (link back to your site)
+--------------------------------------------------------------
+Create/complete these and add "https://mamatharajphotography.in"
+in the bio/link field of each:
+  - Instagram  @mamatharaj.studio  (already in schema)
+  - Facebook   facebook.com/mamatharajphotography
+  - YouTube    (post wedding highlight films — great for SEO)
+  - Pinterest  (pin portfolio images — drives traffic)
+  - LinkedIn   (company page)
+
+Post consistently: 3x/week. Every post = another signal.
+
+--------------------------------------------------------------
+STEP 6 — BACKLINKS (get OTHER websites to link to you)
+--------------------------------------------------------------
+Backlinks are the #2 ranking factor. Real ways to get them:
+
+1. Local wedding venues/planners in Khammam — ask to be listed
+   on their "vendors" page with your link.
+2. Wedding blogs (WedMeGood, WeddingWire) — submit your work
+   for features ("real wedding" submissions).
+3. Local news — Khammam/Telangana news sites often feature
+   local businesses; pitch a story.
+4. Guest posts — write articles for photography blogs.
+5. Client features — ask clients who blog to link to you.
+6. Forums/Reddit/Quora — answer "best photographer in Khammam"
+   questions and link your site naturally (don't spam).
+
+DO NOT buy cheap Fiverr "1000 backlinks" — that HURTS you.
+
+--------------------------------------------------------------
+STEP 7 — CONTENT (keep it fresh)
+--------------------------------------------------------------
+1. Add a BLOG to the site later (e.g. /blog) and publish:
+   - "Top 10 Wedding Photoshoot Locations in Khammam"
+   - "Khammam Wedding Photography Prices Guide"
+   - "Best Pre-Wedding Locations Near Khammam"
+   Each post targets a new keyword + can earn links.
+2. Update portfolio monthly with new work.
+3. Keep adding real testimonials to the site.
+
+--------------------------------------------------------------
+STEP 8 — MONITOR (weekly)
+--------------------------------------------------------------
+- Google Search Console -> Performance: watch impressions for
+  "best photographer in Khammam"
+- Google Business Profile -> Insights: calls, direction requests
+- Track your ranking: search incognito for:
+    "best photographer in Khammam"
+    "photography studio in Khammam"
+    "wedding photographer Khammam"
+
+--------------------------------------------------------------
+REALISTIC TIMELINE
+--------------------------------------------------------------
+Week 1   : Business Profile + verification + sitemap submitted
+Week 2   : All directory listings + social profiles live
+Week 3-8 : Collect reviews (aim 3-5/month), weekly posts
+Month 2-3: See movement for local keywords
+Month 3-6: Target #1 for "best photographer in Khammam"
+
+Local SEO is a marathon, not a sprint. Consistency wins.
+
+==============================================================
+END OF CHECKLIST
+==============================================================

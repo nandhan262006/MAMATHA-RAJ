@@ -101,7 +101,7 @@ export default function Contact() {
                   }
                   label="Studio"
                   value="3-5-80/B, Pumping Well Rd, Khammam"
-                  href="https://maps.app.goo.gl/3qw42se3NcCPctWEA"
+                  href="https://maps.app.goo.gl/CBEw1QkvkM37HUgt8"
                 />
                 <InfoCard
                   icon={
@@ -158,7 +158,7 @@ export default function Contact() {
                   <div style={{ fontSize: "0.7rem", color: "rgba(255,249,242,0.4)" }}>21 Google Reviews</div>
                 </div>
                 <a
-                  href="https://maps.app.goo.gl/3qw42se3NcCPctWEA"
+                  href="https://maps.app.goo.gl/CBEw1QkvkM37HUgt8"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
