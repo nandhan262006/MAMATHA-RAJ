@@ -211,7 +211,7 @@ export default function Contact() {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
                 const lines = [
-                  "New enquiry from mamatharaj.in",
+                  "New enquiry from mamatharajphotography.in",
                   `Name: ${data.get("name")}`,
                   `Email: ${data.get("email") || "—"}`,
                   `Phone: ${data.get("phone") || "—"}`,

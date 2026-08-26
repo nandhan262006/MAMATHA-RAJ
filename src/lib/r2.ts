@@ -58,10 +58,48 @@ async function uploadThumb(body: Buffer, key: string): Promise<string | undefine
   }
 }
 
+export type UploadOptions = { thumb?: boolean; maxWidth?: number };
+
+const ENCODE_QUALITY: Record<string, number> = {
+  jpg: 82,
+  webp: 82,
+  avif: 65,
+};
+
+async function optimizeBody(
+  body: Buffer,
+  ext: string,
+  maxWidth: number
+): Promise<Buffer> {
+  try {
+    const img = sharp(body).rotate();
+    const meta = await img.metadata();
+    if (meta.width && meta.width <= maxWidth) return body;
+
+    const resized = img.resize({ width: maxWidth, withoutEnlargement: true });
+    if (ext === "png") {
+      return await resized.png({ compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
+    }
+    if (ext === "jpg") {
+      return await resized.jpeg({ quality: ENCODE_QUALITY.jpg, mozjpeg: true }).toBuffer();
+    }
+    if (ext === "webp") {
+      return await resized.webp({ quality: ENCODE_QUALITY.webp }).toBuffer();
+    }
+    if (ext === "avif") {
+      return await resized.avif({ quality: ENCODE_QUALITY.avif }).toBuffer();
+    }
+    return await resized.toBuffer();
+  } catch (e) {
+    console.error("image optimization failed, using original:", e);
+    return body;
+  }
+}
+
 export async function uploadImage(
   file: File,
   folder: string,
-  opts?: { thumb?: boolean }
+  opts?: UploadOptions
 ): Promise<UploadResult> {
   if (file.size === 0) return { ok: false, error: "Empty file." };
   if (file.size > MAX_BYTES)
@@ -77,7 +115,10 @@ export async function uploadImage(
   const key = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
   try {
-    const body = Buffer.from(await file.arrayBuffer());
+    const raw = Buffer.from(await file.arrayBuffer());
+    const body = opts?.maxWidth
+      ? await optimizeBody(raw, ext, opts.maxWidth)
+      : raw;
     await getS3().send(
       new PutObjectCommand({
         Bucket: BUCKET,

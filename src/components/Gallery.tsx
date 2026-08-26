@@ -82,7 +82,7 @@ export default function Gallery({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photo.thumb || photo.src}
-                alt={`Photograph ${i + 1}`}
+                alt={`Khammam wedding & portrait photography by Mamatharaj — work ${i + 1}`}
                 loading="lazy"
                 decoding="async"
                 style={{ width: "100%", height: "auto", display: "block" }}

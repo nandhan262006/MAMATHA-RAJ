@@ -7,8 +7,12 @@ import PortfolioGallery from "@/components/PortfolioGallery";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Featured Story — Full Gallery",
-  description: "The complete wedding gallery featured by Mamatha Raj.",
+  title: "Featured Story — Wedding Gallery",
+  description:
+    "A complete featured wedding gallery by Mamatharaj Photography, Khammam's top-rated wedding and portrait photographer.",
+  alternates: {
+    canonical: "/story",
+  },
 };
 
 export default async function StoryPage() {

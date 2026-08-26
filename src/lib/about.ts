@@ -6,9 +6,9 @@ export const ABOUT_DEFAULTS = {
   label: "About the Studio",
   heading: 'Where Light Meets Emotion',
   paragraph1:
-    "Founded in the heart of India, Mamatha Raj was born from a deep passion for visual storytelling. We believe that every celebration — every laugh, every tear, every stolen glance — deserves to be immortalized with cinematic precision.",
+    "Founded in Khammam, Telangana, Mamatharaj Photography was born from a deep passion for visual storytelling. We believe that every celebration — every laugh, every tear, every stolen glance — deserves to be immortalized with cinematic precision.",
   paragraph2:
-    "With over a decade of experience and hundreds of weddings captured across India, our team brings an editorial eye and a documentary soul to every project. We don't just take photographs; we craft visual narratives that resonate for generations.",
+    "With over a decade of experience and hundreds of weddings captured across Khammam, Telangana and the rest of India, our team brings an editorial eye and a documentary soul to every project. We don't just take photographs; we craft visual narratives that resonate for generations.",
   stats: [
     { value: "500+", label: "Weddings Captured" },
     { value: "12+", label: "Years of Craft" },

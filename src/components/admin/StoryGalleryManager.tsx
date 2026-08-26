@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import {
   deleteStoryPhoto,
   deleteSelectedStoryPhotos,
+  deleteAllStoryPhotos,
 } from "@/app/admin/story-actions";
 import type { StoryPhoto } from "@/lib/story-photos";
 import {
@@ -26,11 +27,22 @@ export default function StoryGalleryManager({
   const busy = prog?.phase === "working";
   const inputRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [deletingAll, setDeletingAll] = useState(false);
   const { pending: deleting, remove } = useBatchDelete(async (ids) => {
     const fd = new FormData();
     fd.set("ids", JSON.stringify(ids));
     await deleteSelectedStoryPhotos(fd);
   }, () => setSelected(new Set()));
+
+  async function handleDeleteAll() {
+    if (!window.confirm(`Delete all ${photos.length} photos permanently? This cannot be undone.`)) return;
+    setDeletingAll(true);
+    try {
+      await deleteAllStoryPhotos();
+    } finally {
+      setDeletingAll(false);
+    }
+  }
 
   function toggle(id: number) {
     setSelected((prev) => {
@@ -113,6 +125,20 @@ export default function StoryGalleryManager({
         onClear={() => setSelected(new Set())}
         onSelectAll={() => setSelected(new Set(photos.map((p) => p.id)))}
       />
+
+      {photos.length > 0 && selected.size === 0 ? (
+        <div className="flex items-center justify-between rounded-xl border border-[#A3431F]/20 bg-white px-4 py-2.5">
+          <span className="text-xs text-[#6B6259]">{photos.length} photo{photos.length === 1 ? "" : "s"} in gallery</span>
+          <button
+            type="button"
+            onClick={handleDeleteAll}
+            disabled={deletingAll || busy}
+            className="rounded-lg bg-[#A3431F] px-3 py-1.5 text-xs font-medium text-white transition hover:bg-[#8a3719] disabled:opacity-60"
+          >
+            {deletingAll ? "Deleting…" : "Delete all"}
+          </button>
+        </div>
+      ) : null}
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {photos.map((p, i) => (

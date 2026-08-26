@@ -81,14 +81,16 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     const res = await getDb().execute(
       "SELECT id, image_url, ratio, quote, author, role FROM testimonials ORDER BY position, id"
     );
-    return res.rows.map((row) => ({
-      id: Number(row.id),
-      imageUrl: String(row.image_url),
-      ratio: String(row.ratio),
-      quote: String(row.quote),
-      author: String(row.author),
-      role: String(row.role),
-    }));
+    return res.rows
+      .map((row) => ({
+        id: Number(row.id),
+        imageUrl: String(row.image_url),
+        ratio: String(row.ratio),
+        quote: String(row.quote),
+        author: String(row.author),
+        role: String(row.role),
+      }))
+      .filter((t) => t.imageUrl && t.quote && t.author);
   } catch (e) {
     console.error("testimonials read failed, using defaults:", e);
     return DEFAULT_TESTIMONIALS.map((t, i) => ({ ...t, id: i + 1 }));

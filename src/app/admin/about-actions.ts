@@ -80,7 +80,7 @@ export async function replaceAboutImage(
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "about");
+  const uploaded = await uploadImage(file, "about", { maxWidth: 1600 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {

@@ -7,17 +7,24 @@ import Featured from "@/components/Featured";
 import Testimonials from "@/components/Testimonials";
 import Process from "@/components/Process";
 import CtaBanner from "@/components/CtaBanner";
+import Faq from "@/components/Faq";
 import Map from "@/components/Map";
 import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
 import { getHeroImages } from "@/lib/hero-images";
 import { getAboutContent } from "@/lib/about";
 import { getFeaturedPhotos } from "@/lib/photos";
 import { getServices } from "@/lib/services";
 import { getStoryContent } from "@/lib/story";
 import { getTestimonials } from "@/lib/testimonials";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default async function Home() {
   const [heroImages, aboutContent, featuredPhotos, services, storyContent, testimonials] =
@@ -50,8 +57,8 @@ export default async function Home() {
       <Process />
         <CtaBanner />
         <Map />
+        <Faq />
         <Contact />
-      <Footer />
-    </main>
+      </main>
   );
 }

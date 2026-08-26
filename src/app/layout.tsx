@@ -3,6 +3,14 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Loader from "@/components/Loader";
+import Footer from "@/components/Footer";
+import {
+  SITE_URL,
+  SITE_NAME,
+  buildLocalBusinessSchema,
+  buildPersonSchema,
+  buildFaqSchema,
+} from "@/lib/site";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -18,47 +26,57 @@ const dmSans = DM_Sans({
   style: ["normal", "italic"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mamatharaj.in";
+const ogImageUrl = new URL("/og-image", SITE_URL).toString();
+
+const defaultTitle = "Mamatharaj Photography — Best Photographer in Khammam";
+const defaultDescription =
+  "Mamatharaj Photography is Khammam's top-rated wedding, pre-wedding and portrait photographer. Candid storytelling, cinematic films and editorial precision across Telangana.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Mamatha Raj — Photography & Visual Storytelling",
-    template: "%s | Mamatha Raj",
+    default: defaultTitle,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Wedding, pre-wedding and portrait photography by Mamatha Raj. Capturing light, emotion, and every fleeting moment across India — cinematic films, candid storytelling and editorial precision.",
+  description: defaultDescription,
   keywords: [
-    "wedding photographer",
-    "wedding photography",
-    "pre-wedding shoot",
-    "portrait photography",
-    "cinematic wedding film",
-    "Khammam photographer",
-    "India wedding photographer",
-    "Mamatha Raj",
+    "best photographer in Khammam",
+    "photographer in Khammam",
+    "Khammam wedding photographer",
+    "wedding photography Khammam",
+    "pre-wedding shoot Khammam",
+    "portrait photography Khammam",
+    "cinematic wedding film Telangana",
+    "Mamatharaj Photography",
+    "Mamatha Raj photographer",
+    "Telangana wedding photographer",
   ],
   authors: [{ name: "Mamatha Raj" }],
   creator: "Mamatha Raj",
-  applicationName: "Mamatha Raj",
+  applicationName: SITE_NAME,
+  category: "photography",
   formatDetection: { email: false, address: false, telephone: false },
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: "/",
-    siteName: "Mamatha Raj",
-    title: "Mamatha Raj — Photography & Visual Storytelling",
-    description:
-      "Wedding, pre-wedding and portrait photography. Capturing light, emotion, and every fleeting moment across India.",
+    siteName: SITE_NAME,
+    title: defaultTitle,
+    description: defaultDescription,
+    images: [
+      {
+        url: ogImageUrl,
+        width: 1200,
+        height: 630,
+        alt: "Mamatharaj Photography — Best Photographer in Khammam",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mamatha Raj — Photography & Visual Storytelling",
-    description:
-      "Wedding, pre-wedding and portrait photography. Capturing light, emotion, and every fleeting moment across India.",
+    title: defaultTitle,
+    description: defaultDescription,
+    images: [ogImageUrl],
     creator: "@mamatharaj.studio",
   },
   robots: {
@@ -72,7 +90,19 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    "geo.region": "IN-TS",
+    "geo.placename": "Khammam",
+    "geo.position": "17.2473;80.1514",
+    ICBM: "17.2473, 80.1514",
+  },
 };
+
+const jsonLd = [
+  buildLocalBusinessSchema(),
+  buildPersonSchema(),
+  buildFaqSchema(),
+];
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -81,9 +111,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {jsonLd.map((schema) => (
+          <script
+            key={JSON.stringify(schema)}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
         <Loader />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

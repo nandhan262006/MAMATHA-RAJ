@@ -72,7 +72,7 @@ export async function replaceServiceImage(
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "services");
+  const uploaded = await uploadImage(file, "services", { maxWidth: 1600 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {
@@ -117,6 +117,13 @@ export async function addService(): Promise<void> {
   try {
     await ensureSchema();
     const db = getDb();
+
+    // Clean up any existing blank cards first
+    await db.execute(
+      `DELETE FROM services
+       WHERE title = 'New Service' AND category = ''
+         AND description = '' AND image_url = ''`
+    );
 
     const existingBlank = await db.execute(
       `SELECT id FROM services

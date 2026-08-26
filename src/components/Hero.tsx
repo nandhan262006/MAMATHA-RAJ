@@ -47,12 +47,14 @@ export default function Hero({ images }: { images: string[] }) {
       >
         {(images.length > 0 ? images : Array(24).fill("")).map((src, i) => (
           <div key={i} style={{ overflow: "hidden", background: "#1a1714", aspectRatio: "3/4" }}>
-            <img
-              src={src}
-              alt=""
-              loading="eager"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "brightness(0.6)" }}
-            />
+            {src ? (
+              <img
+                src={src}
+                alt=""
+                loading="eager"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "brightness(0.6)" }}
+              />
+            ) : null}
           </div>
         ))}
 
@@ -82,7 +84,7 @@ export default function Hero({ images }: { images: string[] }) {
             marginBottom: "2rem",
           }}
         >
-          Photography & Visual Storytelling
+          Khammam Wedding &amp; Portrait Photography
         </p>
 
         {/* Thin decorative line */}
@@ -99,32 +101,35 @@ export default function Hero({ images }: { images: string[] }) {
         {/* Main Heading */}
         <h1
           style={{
-            ...reveal(160),
             fontFamily: "var(--font-serif)",
             fontSize: "clamp(4rem, 10vw, 8rem)",
             fontWeight: 700,
             lineHeight: 0.95,
             color: "#ffffff",
             letterSpacing: "-0.02em",
-            marginBottom: "0.5rem",
-          }}
-        >
-          Mamatha
-        </h1>
-        <h1
-          style={{
-            ...reveal(240),
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(4rem, 10vw, 8rem)",
-            fontWeight: 700,
-            fontStyle: "italic",
-            lineHeight: 0.95,
-            color: "#E8764D",
-            letterSpacing: "-0.02em",
             marginBottom: "2rem",
           }}
         >
-          Raj
+          <span
+            style={{
+              ...reveal(160),
+              display: "block",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Mamatha
+          </span>
+          <span
+            style={{
+              ...reveal(240),
+              display: "block",
+              fontStyle: "italic",
+              color: "#E8764D",
+            }}
+          >
+            Raj
+          </span>
+          <span className="sr-only"> — Best Photographer in Khammam</span>
         </h1>
 
         {/* Subtitle */}
@@ -138,8 +143,8 @@ export default function Hero({ images }: { images: string[] }) {
             marginBottom: "3rem",
           }}
         >
-          Capturing light, emotion, and the beauty of every fleeting moment —
-          one frame at a time.
+          Khammam&apos;s leading wedding &amp; portrait photographer — capturing
+          light, emotion, and every fleeting moment, one frame at a time.
         </p>
 
         {/* CTAs */}

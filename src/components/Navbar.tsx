@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation";
 const INSTAGRAM_URL = "https://instagram.com/mamatharaj.studio";
 
 const LINKS = [
-  { href: "#about", label: "About" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "#services", label: "Services" },
-  { href: "#testimonials", label: "Reviews" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#testimonials", label: "Reviews" },
+  { href: "/contact", label: "Contact" },
   { href: "/admin", label: "Admin" },
 ];
 
@@ -157,7 +157,7 @@ export default function Navbar() {
         </li>
         <li>
           <a
-            href={resolveHref("#contact")}
+            href="/contact"
             className="nav-cta"
             style={{
               fontSize: "0.8rem",

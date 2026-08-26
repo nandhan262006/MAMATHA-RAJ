@@ -6,9 +6,12 @@ import PortfolioGallery from "@/components/PortfolioGallery";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Portfolio — All Works",
+  title: "Portfolio — Wedding & Portrait Photography in Khammam",
   description:
-    "The complete photography portfolio of Mamatha Raj — weddings, pre-weddings and portraits across India.",
+    "The complete photography portfolio of Mamatharaj Photography — weddings, pre-weddings and portraits captured in Khammam and across Telangana.",
+  alternates: {
+    canonical: "/portfolio",
+  },
 };
 
 export default async function PortfolioPage() {

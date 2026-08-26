@@ -43,8 +43,10 @@ export default function Testimonials({
 }: {
   slides?: TestimonialSlide[];
 }) {
+  const validSlides = slides.filter((s) => s.img && s.quote && s.author);
+  const displaySlides = validSlides.length > 0 ? validSlides : FALLBACK_SLIDES;
   const [current, setCurrent] = useState(0);
-  const total = Math.max(slides.length, 1);
+  const total = Math.max(displaySlides.length, 1);
 
   const goToSlide = (index: number) => {
     setCurrent(((index % total) + total) % total);
@@ -56,7 +58,7 @@ export default function Testimonials({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
-  const slide = slides[current] ?? FALLBACK_SLIDES[0];
+  const slide = displaySlides[current] ?? FALLBACK_SLIDES[0];
 
   return (
     <section
@@ -169,7 +171,7 @@ export default function Testimonials({
                 justifyContent: "center",
               }}
             >
-              {slides.map((_, i) => (
+              {displaySlides.map((_, i) => (
                 <button
                   key={i}
                   aria-label={`Slide ${i + 1}`}

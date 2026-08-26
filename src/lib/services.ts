@@ -87,13 +87,15 @@ export async function getServices(): Promise<ServiceCard[]> {
     const res = await getDb().execute(
       "SELECT id, category, title, description, image_url FROM services ORDER BY position, id"
     );
-    return res.rows.map((row) => ({
-      id: Number(row.id),
-      category: String(row.category),
-      title: String(row.title),
-      description: String(row.description),
-      imageUrl: String(row.image_url),
-    }));
+    return res.rows
+      .map((row) => ({
+        id: Number(row.id),
+        category: String(row.category),
+        title: String(row.title),
+        description: String(row.description),
+        imageUrl: String(row.image_url),
+      }))
+      .filter((s) => s.imageUrl);
   } catch (e) {
     console.error("services read failed, using defaults:", e);
     return DEFAULT_SERVICES.map((s, i) => ({ ...s, id: i + 1 }));

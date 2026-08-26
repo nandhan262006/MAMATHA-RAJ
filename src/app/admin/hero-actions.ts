@@ -41,7 +41,7 @@ export async function replaceHeroImage(
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "hero");
+  const uploaded = await uploadImage(file, "hero", { maxWidth: 900 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {

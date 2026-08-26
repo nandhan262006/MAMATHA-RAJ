@@ -79,7 +79,7 @@ export async function replaceTestimonialImage(
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "testimonials");
+  const uploaded = await uploadImage(file, "testimonials", { maxWidth: 900 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {
@@ -124,6 +124,13 @@ export async function addTestimonial(): Promise<void> {
   try {
     await ensureSchema();
     const db = getDb();
+
+    // Clean up any existing blank entries first
+    await db.execute(
+      `DELETE FROM testimonials
+       WHERE quote = 'New testimonial' AND author = ''
+         AND role = '' AND image_url = ''`
+    );
 
     const existingBlank = await db.execute(
       `SELECT id FROM testimonials

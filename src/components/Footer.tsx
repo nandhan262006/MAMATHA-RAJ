@@ -1,17 +1,19 @@
 const PAGES = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#gallery", label: "Portfolio" },
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/story", label: "Featured Story" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const SERVICES = [
-  { href: "#services", label: "Wedding Photography" },
-  { href: "#services", label: "Pre-Wedding" },
-  { href: "#services", label: "Portraits" },
-  { href: "#services", label: "Cinematic Films" },
-  { href: "#services", label: "Events" },
+  { href: "/services/wedding-photography", label: "Wedding Photography" },
+  { href: "/services/pre-wedding-shoot", label: "Pre-Wedding" },
+  { href: "/services/portrait-sessions", label: "Portraits" },
+  { href: "/services/cinematic-films", label: "Cinematic Films" },
+  { href: "/services/event-coverage", label: "Events" },
+  { href: "/services/destination-shoot", label: "Destination" },
 ];
 
 const CONTACTS = [

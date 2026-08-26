@@ -105,7 +105,7 @@ export async function replaceStoryImage(
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "story");
+  const uploaded = await uploadImage(file, "story", { maxWidth: 1600 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {
@@ -250,4 +250,24 @@ export async function deleteSelectedStoryPhotos(formData: FormData): Promise<voi
 function revalidateStoryPaths() {
   revalidatePath("/");
   revalidatePath("/story");
+}
+
+export async function deleteAllStoryPhotos(): Promise<void> {
+  if (!(await isAuthenticated())) return;
+
+  try {
+    await ensureSchema();
+    const db = getDb();
+    const existing = await db.execute("SELECT src FROM story_photos");
+
+    await db.execute("DELETE FROM story_photos");
+
+    await Promise.all(
+      existing.rows.map((r) => deleteImageAndThumbFromUrl(String(r.src)))
+    );
+  } catch (e) {
+    console.error("story_photos delete all failed:", e);
+  }
+
+  revalidateStoryPaths();
 }
