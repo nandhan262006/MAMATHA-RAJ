@@ -114,8 +114,8 @@ export const metadata: Metadata = {
   other: {
     "geo.region": "IN-TS",
     "geo.placename": "Khammam",
-    "geo.position": "17.2473;80.1514",
-    ICBM: "17.2473, 80.1514",
+    "geo.position": "17.2419046;80.1315073",
+    ICBM: "17.2419046, 80.1315073",
   },
 };
 

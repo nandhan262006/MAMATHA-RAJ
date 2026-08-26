@@ -18,7 +18,7 @@ export const ADDRESS = {
   addressCountry: "IN",
 } as const;
 
-export const GEO = { latitude: 17.2473, longitude: 80.1514 } as const;
+export const GEO = { latitude: 17.2419046, longitude: 80.1315073 } as const;
 
 export const MAPS_URL = "https://maps.app.goo.gl/CBEw1QkvkM37HUgt8";
 export const GOOGLE_REVIEWS_URL =
