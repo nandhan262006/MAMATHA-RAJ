@@ -19,6 +19,10 @@ function imageEntries(
     .map((p) => abs(p.src));
 }
 
+function alt(page: string, lang = "en-IN") {
+  return { [lang]: `${SITE_URL}${page}` };
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [allPhotos, featuredPhotos, storyPhotos] = await Promise.all([
     getAllPhotos(),
@@ -32,25 +36,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
+      alternates: { languages: alt("/") },
       images: imageEntries(featuredPhotos),
     },
     {
       url: `${SITE_URL}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.7,
+      priority: 0.8,
+      alternates: { languages: alt("/about") },
     },
     {
       url: `${SITE_URL}/services`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
+      alternates: { languages: alt("/services") },
     },
     ...SERVICE_PAGES.map((s) => ({
       url: `${SITE_URL}/services/${s.slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,
+      alternates: { languages: alt(`/services/${s.slug}`) },
       images: [abs(s.image)],
     })),
     {
@@ -58,6 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
+      alternates: { languages: alt("/portfolio") },
       images: imageEntries(allPhotos),
     },
     {
@@ -65,6 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
+      alternates: { languages: alt("/story") },
       images: imageEntries(storyPhotos),
     },
     {
@@ -72,6 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
+      alternates: { languages: alt("/contact") },
     },
   ];
 }
