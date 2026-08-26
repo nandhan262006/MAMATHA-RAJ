@@ -10,6 +10,7 @@ import {
   buildLocalBusinessSchema,
   buildPersonSchema,
   buildFaqSchema,
+  buildWebSiteSchema,
 } from "@/lib/site";
 
 const cormorant = Cormorant_Garamond({
@@ -26,17 +27,20 @@ const dmSans = DM_Sans({
   style: ["normal", "italic"],
 });
 
-const ogImageUrl = new URL("/og-image", SITE_URL).toString();
+const ogImageUrl = new URL("/og-image.jpg", SITE_URL).toString();
 
-const defaultTitle = "Mamatharaj Photography — Best Photographer in Khammam";
+const defaultTitle =
+  "Mamatharaj Photography — Best Photographer in Khammam | Wedding & Portrait";
 const defaultDescription =
-  "Mamatharaj Photography is Khammam's top-rated wedding, pre-wedding and portrait photographer. Candid storytelling, cinematic films and editorial precision across Telangana.";
+  "Mamatharaj Photography is Khammam's #1 rated wedding, pre-wedding and portrait photographer. 500+ weddings, 5.0-star Google rating, candid storytelling and cinematic films across Telangana. Book the best photographer in Khammam today.";
+const ogDescription =
+  "Khammam's #1 rated wedding & portrait photographer. 500+ weddings, 5.0-star Google rating. Candid storytelling & cinematic films. Book now.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: defaultTitle,
-    template: `%s | ${SITE_NAME}`,
+    template: `%s | ${SITE_NAME} — Best Photographer in Khammam`,
   },
   description: defaultDescription,
   keywords: [
@@ -47,12 +51,23 @@ export const metadata: Metadata = {
     "pre-wedding shoot Khammam",
     "portrait photography Khammam",
     "cinematic wedding film Telangana",
+    "best photography studio in Khammam",
+    "photography studio Khammam",
+    "top photographer Telangana",
+    "book photographer in Khammam",
+    "wedding photographer near me Khammam",
     "Mamatharaj Photography",
     "Mamatha Raj photographer",
     "Telangana wedding photographer",
+    "event photographer Khammam",
+    "destination wedding photographer India",
+    "Khammam portrait studio",
+    "best pre-wedding photographer Khammam",
+    "cinematography Khammam",
   ],
   authors: [{ name: "Mamatha Raj" }],
   creator: "Mamatha Raj",
+  publisher: "Mamatharaj Photography",
   applicationName: SITE_NAME,
   category: "photography",
   formatDetection: { email: false, address: false, telephone: false },
@@ -62,20 +77,20 @@ export const metadata: Metadata = {
     url: "/",
     siteName: SITE_NAME,
     title: defaultTitle,
-    description: defaultDescription,
+    description: ogDescription,
     images: [
       {
         url: ogImageUrl,
-        width: 1200,
-        height: 630,
-        alt: "Mamatharaj Photography — Best Photographer in Khammam",
+        width: 2773,
+        height: 4160,
+        alt: "Mamatharaj Photography — Best Photographer in Khammam, Telangana",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: defaultTitle,
-    description: defaultDescription,
+    description: ogDescription,
     images: [ogImageUrl],
     creator: "@mamatharaj.studio",
   },
@@ -90,6 +105,12 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-IN": "/",
+    },
+  },
   other: {
     "geo.region": "IN-TS",
     "geo.placename": "Khammam",
@@ -99,6 +120,7 @@ export const metadata: Metadata = {
 };
 
 const jsonLd = [
+  buildWebSiteSchema(),
   buildLocalBusinessSchema(),
   buildPersonSchema(),
   buildFaqSchema(),
@@ -110,6 +132,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="icon" href="/icon.png" sizes="any" />
+        <link rel="preconnect" href="https://mamatharajphotography.in" />
+        <meta name="theme-color" content="#1A1714" />
+        <meta name="msapplication-TileColor" content="#1A1714" />
+      </head>
       <body className="min-h-full flex flex-col">
         {jsonLd.map((schema) => (
           <script

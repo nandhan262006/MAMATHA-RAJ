@@ -1,10 +1,10 @@
 const ITEMS = [
-  "Wedding Photography",
-  "Pre-Wedding Shoots",
-  "Portrait Sessions",
-  "Cinematic Films",
-  "Event Coverage",
-  "Destination Shoots",
+  "Best Wedding Photographer in Khammam",
+  "Pre-Wedding Shoots Khammam",
+  "Portrait Sessions Khammam",
+  "Cinematic Films Khammam",
+  "Event Coverage Khammam",
+  "Destination Shoots India",
 ];
 
 export default function Marquee() {

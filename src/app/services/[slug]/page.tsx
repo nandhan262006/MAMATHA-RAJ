@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SERVICE_PAGES, type ServicePage } from "@/lib/service-pages";
-import { SITE_URL, SITE_NAME, PHONE_TEL, PHONE_DISPLAY } from "@/lib/site";
+import {
+  SITE_URL,
+  SITE_NAME,
+  PHONE_TEL,
+  PHONE_DISPLAY,
+  buildBreadcrumbSchema,
+} from "@/lib/site";
 
 export function generateStaticParams() {
   return SERVICE_PAGES.map((s) => ({ slug: s.slug }));
@@ -19,6 +25,13 @@ export async function generateMetadata({
   return {
     title: service.metaTitle,
     description: service.metaDescription,
+    keywords: [
+      `${service.title.toLowerCase()} Khammam`,
+      `best ${service.title.toLowerCase()} Khammam`,
+      `book ${service.title.toLowerCase()} Khammam`,
+      `Mamatharaj Photography ${service.title.toLowerCase()}`,
+      `photographer Khammam ${service.title.toLowerCase()}`,
+    ],
     alternates: { canonical: `/services/${service.slug}` },
     openGraph: {
       title: service.metaTitle,
@@ -30,7 +43,7 @@ export async function generateMetadata({
           url: service.image,
           width: 1200,
           height: 630,
-          alt: `${service.title} in Khammam`,
+          alt: `${service.title} in Khammam — Mamatharaj Photography`,
         },
       ],
     },
@@ -41,7 +54,7 @@ function serviceSchema(service: ServicePage) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: service.title,
+    name: `${service.title} in Khammam`,
     description: service.metaDescription,
     serviceType: service.title,
     url: `${SITE_URL}/services/${service.slug}`,
@@ -51,43 +64,46 @@ function serviceSchema(service: ServicePage) {
       name: SITE_NAME,
       url: `${SITE_URL}/`,
       telephone: PHONE_TEL,
-      areaServed: "Khammam",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "3-5-80/B, Pumping Well Road",
+        addressLocality: "Khammam",
+        addressRegion: "Telangana",
+        postalCode: "507001",
+        addressCountry: "IN",
+      },
+      areaServed: ["Khammam", "Telangana", "India"],
     },
-    areaServed: [{ "@type": "City", name: "Khammam" }],
+    areaServed: [
+      { "@type": "City", name: "Khammam" },
+      { "@type": "State", name: "Telangana" },
+    ],
     offers: {
       "@type": "Offer",
       url: `${SITE_URL}/services/${service.slug}`,
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
     },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: service.title,
+      itemListElement: service.features.map((f) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: f,
+        },
+      })),
+    },
   };
 }
 
 function breadcrumbSchema(service: ServicePage) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${SITE_URL}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Services",
-        item: `${SITE_URL}/services`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: service.title,
-        item: `${SITE_URL}/services/${service.slug}`,
-      },
-    ],
-  };
+  return buildBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services" },
+    { name: service.title, url: `/services/${service.slug}` },
+  ]);
 }
 
 function faqSchema(service: ServicePage) {
@@ -210,7 +226,7 @@ export default async function ServiceDetailPage({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={service.image}
-            alt={`${service.title} in Khammam, Telangana`}
+            alt={`${service.title} in Khammam, Telangana — Mamatharaj Photography`}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
         </div>
@@ -266,9 +282,9 @@ export default async function ServiceDetailPage({
               textAlign: "center",
             }}
           >
-            {service.title}{" "}
+            {service.title} in Khammam{" "}
             <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>
-              FAQ
+              — FAQ
             </em>
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -346,7 +362,7 @@ export default async function ServiceDetailPage({
           }}
         >
           Call {PHONE_DISPLAY} or reach us on WhatsApp to check availability for
-          your date.
+          your date. Mamatharaj Photography — Khammam&apos;s best photographer.
         </p>
         <Link href="/contact" className="btn-primary">
           <span>Enquire Now</span>
@@ -369,7 +385,7 @@ export default async function ServiceDetailPage({
               marginBottom: "1.5rem",
             }}
           >
-            Explore Other Services
+            Explore Other Services in Khammam
           </h3>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
             {others.map((o) => (

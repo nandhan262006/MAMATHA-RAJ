@@ -1,14 +1,31 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SERVICE_PAGES } from "@/lib/service-pages";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, SITE_NAME, buildBreadcrumbSchema } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Photography Services in Khammam | Mamatharaj Photography",
+  title: "Photography Services in Khammam | Wedding, Pre-Wedding & Portrait",
   description:
-    "Wedding photography, pre-wedding shoots, portrait sessions, cinematic films, event coverage and destination shoots in Khammam, Telangana.",
+    "Best photography services in Khammam — wedding photography, pre-wedding shoots, portrait sessions, cinematic films, event coverage and destination shoots by Mamatharaj Photography.",
+  keywords: [
+    "photography services Khammam",
+    "wedding photography Khammam",
+    "pre-wedding shoot Khammam",
+    "portrait photography Khammam",
+    "cinematic films Khammam",
+    "event photography Khammam",
+    "destination wedding photographer Khammam",
+    "best photographer in Khammam services",
+  ],
   alternates: {
     canonical: "/services",
+  },
+  openGraph: {
+    title: "Photography Services in Khammam | Mamatharaj Photography",
+    description:
+      "Wedding photography, pre-wedding shoots, portrait sessions, cinematic films, event coverage and destination shoots in Khammam, Telangana.",
+    url: `${SITE_URL}/services`,
+    type: "website",
   },
 };
 
@@ -16,20 +33,32 @@ const collectionSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "Photography Services in Khammam",
+  description:
+    "Complete range of professional photography services by Mamatharaj Photography in Khammam, Telangana",
   itemListElement: SERVICE_PAGES.map((s, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: s.title,
     url: `${SITE_URL}/services/${s.slug}`,
+    description: s.metaDescription,
   })),
 };
 
 export default function ServicesPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services" },
+  ]);
+
   return (
     <main className="flex flex-1 flex-col">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <section
@@ -75,9 +104,9 @@ export default function ServicesPage() {
             margin: "1.25rem auto 0",
           }}
         >
-          From grand weddings to intimate portraits, Mamatharaj Photography
-          offers a complete range of professional photography services across
-          Khammam, Telangana and India.
+          From grand weddings to intimate portraits, Mamatharaj Photography —
+          Khammam&apos;s best photographer — offers a complete range of
+          professional photography services across Khammam, Telangana and India.
         </p>
       </section>
 
@@ -114,7 +143,7 @@ export default function ServicesPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={s.image}
-                  alt={`${s.title} in Khammam`}
+                  alt={`${s.title} in Khammam — Mamatharaj Photography`}
                   loading="lazy"
                   decoding="async"
                   style={{
@@ -136,7 +165,7 @@ export default function ServicesPage() {
                     marginBottom: "0.75rem",
                   }}
                 >
-                  {s.title}
+                  {s.title} in Khammam
                 </h2>
                 <p
                   style={{

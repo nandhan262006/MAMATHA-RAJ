@@ -39,6 +39,18 @@ export default function Faq() {
                 Khammam
               </em>
             </h2>
+            <p
+              style={{
+                marginTop: "1rem",
+                color: "var(--color-fg-muted)",
+                maxWidth: 500,
+                lineHeight: 1.7,
+                margin: "1rem auto 0",
+              }}
+            >
+              Everything you need to know about Mamatharaj Photography —
+              Khammam&apos;s best wedding and portrait photographer.
+            </p>
           </div>
         </Reveal>
 

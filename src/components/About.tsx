@@ -125,7 +125,7 @@ export default function About({ content }: { content: AboutContent }) {
           >
             <img
               src={content.imageUrl}
-              alt="Photographer at work"
+              alt="Mamatha Raj — Best Photographer in Khammam at work"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
             <div
@@ -171,6 +171,20 @@ export default function About({ content }: { content: AboutContent }) {
             >
               <HeadingWithAccent text={content.heading} />
             </h2>
+          </Reveal>
+          <Reveal delay={1}>
+            <p
+              style={{
+                fontSize: "0.7rem",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.15em",
+                color: "var(--color-fg-muted)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Khammam&apos;s Best Photographer
+            </p>
           </Reveal>
           <Reveal delay={2}>
             <p

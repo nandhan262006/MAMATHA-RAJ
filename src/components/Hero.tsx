@@ -84,7 +84,7 @@ export default function Hero({ images }: { images: string[] }) {
             marginBottom: "2rem",
           }}
         >
-          Khammam Wedding &amp; Portrait Photography
+          Khammam&apos;s Best Wedding &amp; Portrait Photographer
         </p>
 
         {/* Thin decorative line */}
@@ -129,7 +129,6 @@ export default function Hero({ images }: { images: string[] }) {
           >
             Raj
           </span>
-          <span className="sr-only"> — Best Photographer in Khammam</span>
         </h1>
 
         {/* Subtitle */}
@@ -138,13 +137,14 @@ export default function Hero({ images }: { images: string[] }) {
             ...reveal(360),
             fontSize: "1.1rem",
             color: "rgba(255, 255, 255, 0.8)",
-            maxWidth: 480,
+            maxWidth: 520,
             lineHeight: 1.8,
             marginBottom: "3rem",
           }}
         >
           Khammam&apos;s leading wedding &amp; portrait photographer — capturing
-          light, emotion, and every fleeting moment, one frame at a time.
+          light, emotion, and every fleeting moment. 500+ weddings, 5.0-star
+          Google rating, candid storytelling &amp; cinematic precision.
         </p>
 
         {/* CTAs */}

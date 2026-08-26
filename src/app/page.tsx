@@ -16,6 +16,7 @@ import { getFeaturedPhotos } from "@/lib/photos";
 import { getServices } from "@/lib/services";
 import { getStoryContent } from "@/lib/story";
 import { getTestimonials } from "@/lib/testimonials";
+import { SITE_URL, SITE_NAME, buildBreadcrumbSchema } from "@/lib/site";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -37,8 +38,17 @@ export default async function Home() {
       getTestimonials(),
     ]);
 
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", url: "/" },
+  ]);
+
   return (
     <main className="flex flex-1 flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <Hero images={heroImages.map((s) => s.url)} />
       <Marquee />
       <About content={aboutContent} />
@@ -55,10 +65,10 @@ export default async function Home() {
         }))}
       />
       <Process />
-        <CtaBanner />
-        <Map />
-        <Faq />
-        <Contact />
-      </main>
+      <CtaBanner />
+      <Map />
+      <Faq />
+      <Contact />
+    </main>
   );
 }

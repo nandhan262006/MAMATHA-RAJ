@@ -1,3 +1,5 @@
+import { SITE_NAME, PHONE_DISPLAY, EMAIL } from "@/lib/site";
+
 const PAGES = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
@@ -17,8 +19,8 @@ const SERVICES = [
 ];
 
 const CONTACTS = [
-  { href: "tel:+919010627571", label: "+91 90106 27571" },
-  { href: "mailto:hello@mamatharaj.in", label: "hello@mamatharaj.in" },
+  { href: "tel:+919010627571", label: PHONE_DISPLAY },
+  { href: `mailto:${EMAIL}`, label: EMAIL },
   {
     href: "https://instagram.com/mamatharaj.studio",
     label: "Instagram",
@@ -63,7 +65,22 @@ export default function Footer() {
           </div>
           <p style={{ fontSize: "0.9rem", lineHeight: 1.7, maxWidth: 300 }}>
             Capturing light, emotion, and the beauty of every fleeting moment.
-            Based in Khammam, available worldwide.
+            Khammam&apos;s best wedding &amp; portrait photographer — available
+            worldwide.
+          </p>
+          <p
+            style={{
+              fontSize: "0.8rem",
+              lineHeight: 1.6,
+              marginTop: "1rem",
+              color: "rgba(255,249,242,0.4)",
+            }}
+          >
+            3-5-80/B, Pumping Well Road
+            <br />
+            Khammam, Telangana 507001
+            <br />
+            India
           </p>
         </div>
 
@@ -162,8 +179,10 @@ export default function Footer() {
           fontSize: "0.75rem",
         }}
       >
-        <span>&copy; 2026 Mamatha Raj. All rights reserved.</span>
-        <span>Designed with light & love in Khammam</span>
+        <span>
+          &copy; {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
+        </span>
+        <span>Best Photographer in Khammam, Telangana</span>
       </div>
     </footer>
   );

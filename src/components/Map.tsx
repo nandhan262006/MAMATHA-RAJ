@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import { SITE_NAME } from "@/lib/site";
 
 const MAPS_URL = "https://maps.app.goo.gl/Ni1ogCMpSQ1qbjw9A";
 const EMBED_SRC =
@@ -59,7 +60,7 @@ export default function Map() {
         >
           <iframe
             src={EMBED_SRC}
-            title="Mamatharaj Photography on Google Maps"
+            title={`${SITE_NAME} on Google Maps — Pumping Well Road, Khammam`}
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
@@ -86,16 +87,28 @@ export default function Map() {
             textAlign: "left",
           }}
         >
-          <p
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "1.05rem",
-              color: "rgba(44,40,36,0.7)",
-              lineHeight: 1.6,
-            }}
-          >
-            Mamatharaj Photography — Pumping Well Road, Khammam, Telangana
-          </p>
+          <div>
+            <p
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "1.05rem",
+                color: "rgba(44,40,36,0.7)",
+                lineHeight: 1.6,
+              }}
+            >
+              Mamatharaj Photography — Pumping Well Road, Khammam, Telangana
+              507001
+            </p>
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "rgba(44,40,36,0.5)",
+                marginTop: "0.25rem",
+              }}
+            >
+              Open daily 10:00 AM – 7:00 PM · +91 90106 27571
+            </p>
+          </div>
           <a
             href={MAPS_URL}
             target="_blank"

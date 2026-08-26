@@ -3,15 +3,29 @@ import Link from "next/link";
 import { getStoryContent } from "@/lib/story";
 import { getStoryPhotos } from "@/lib/story-photos";
 import PortfolioGallery from "@/components/PortfolioGallery";
+import { SITE_URL, buildBreadcrumbSchema } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Featured Story — Wedding Gallery",
+  title: "Featured Wedding Story — Best Wedding Photography in Khammam",
   description:
-    "A complete featured wedding gallery by Mamatharaj Photography, Khammam's top-rated wedding and portrait photographer.",
+    "A complete featured wedding gallery by Mamatharaj Photography — Khammam's top-rated wedding and portrait photographer. Candid storytelling and cinematic precision.",
+  keywords: [
+    "wedding story Khammam",
+    "featured wedding photography Khammam",
+    "best wedding photographer Khammam gallery",
+    "Mamatharaj Photography wedding",
+  ],
   alternates: {
     canonical: "/story",
+  },
+  openGraph: {
+    title: "Featured Wedding Story — Best Wedding Photography in Khammam",
+    description:
+      "A complete featured wedding gallery by Mamatharaj Photography, Khammam's top-rated wedding and portrait photographer.",
+    url: `${SITE_URL}/story`,
+    type: "website",
   },
 };
 
@@ -21,8 +35,18 @@ export default async function StoryPage() {
     getStoryPhotos(),
   ]);
 
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Featured Story", url: "/story" },
+  ]);
+
   return (
     <main className="flex flex-1 flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <section
         style={{
           padding: "clamp(5rem, 10vw, 9rem) clamp(1rem, 4vw, 3rem) 2rem",
@@ -43,7 +67,7 @@ export default async function StoryPage() {
           >
             {content.label}
           </p>
-          <h2
+          <h1
             style={{
               fontFamily: "var(--font-serif)",
               fontSize: "clamp(2.4rem, 5vw, 4rem)",
@@ -55,9 +79,12 @@ export default async function StoryPage() {
             <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>
               {content.headingAccent}
             </em>
-          </h2>
+          </h1>
           <p style={{ marginTop: "1rem", color: "var(--color-fg-muted)", maxWidth: 520 }}>
             {content.description}
+          </p>
+          <p style={{ marginTop: "0.5rem", color: "var(--color-fg-muted)", fontSize: "0.9rem" }}>
+            Mamatharaj Photography — Khammam&apos;s best wedding photographer.
           </p>
           <p style={{ marginTop: "1.5rem" }}>
             <Link href="/" className="text-sm underline underline-offset-4 hover:text-[#C4552D]">

@@ -77,7 +77,8 @@ export default function CtaBanner() {
           }}
         >
           Let&apos;s create something extraordinary together. Your celebration
-          deserves to be remembered forever.
+          deserves to be remembered forever. Book Khammam&apos;s best
+          photographer today.
         </p>
       </Reveal>
       <Reveal delay={2}>
