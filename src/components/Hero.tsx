@@ -110,24 +110,17 @@ export default function Hero({ images }: { images: string[] }) {
             marginBottom: "2rem",
           }}
         >
-          <span
-            style={{
-              ...reveal(160),
-              display: "block",
-              marginBottom: "0.5rem",
-            }}
-          >
+          <span style={{ ...reveal(160) }}>
             Mamatha
-          </span>
-          <span
-            style={{
-              ...reveal(240),
-              display: "block",
-              fontStyle: "italic",
-              color: "#E8764D",
-            }}
-          >
-            Raj
+            <span
+              style={{
+                ...reveal(240),
+                fontStyle: "italic",
+                color: "#E8764D",
+              }}
+            >
+              Raj
+            </span>
           </span>
         </h1>
 
