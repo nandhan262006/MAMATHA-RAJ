@@ -24,7 +24,7 @@ export default function SidebarNav() {
       {/* Mobile top bar */}
       <div className="flex items-center justify-between border-b border-[#1A1714]/10 bg-[#2C2824] px-4 py-3 lg:hidden">
         <Link href="/admin" className="text-sm tracking-[0.25em] uppercase text-[#FFF9F2]">
-          Mamatha Raj <span className="text-[#E8764D]">Admin</span>
+          Mamatharaj <span className="text-[#E8764D]">Admin</span>
         </Link>
         <button
           onClick={() => setOpen((v) => !v)}
@@ -43,7 +43,7 @@ export default function SidebarNav() {
       >
         <div className="hidden lg:mb-10 lg:block">
           <Link href="/" className="text-xs uppercase tracking-[0.35em] text-[#E8764D]">
-            Mamatha Raj
+            Mamatharaj
           </Link>
           <p className="mt-1 font-serif text-2xl font-light text-[#FFF9F2]">Admin</p>
         </div>

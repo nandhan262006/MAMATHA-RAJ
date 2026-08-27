@@ -17,7 +17,7 @@ export default async function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="mb-10 text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-[#C4552D]">
-            Mamatha Raj
+            Mamatharaj
           </p>
           <h1 className="mt-2 font-serif text-4xl font-light text-[#1A1714]">
             Admin

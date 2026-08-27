@@ -2,7 +2,7 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://mamatharajphotography.in";
 
 export const SITE_NAME = "Mamatharaj Photography";
-export const PHOTOGRAPHER_NAME = "Mamatha Raj";
+export const PHOTOGRAPHER_NAME = "Mamatharaj";
 export const TAGLINE =
   "Best Wedding, Pre-Wedding & Portrait Photographer in Khammam";
 
@@ -54,7 +54,7 @@ export const SERVICE_KEYWORDS = [
   "best photography studio in Khammam",
   "photography studio Khammam",
   "Mamatharaj Photography",
-  "Mamatha Raj photographer",
+  "Mamatharaj photographer",
   "Telangana wedding photographer",
   "Khammam photographer phone number",
   "book photographer in Khammam",
@@ -72,7 +72,7 @@ export const FAQS: FaqItem[] = [
   {
     question: "Who is the best photographer in Khammam?",
     answer:
-      "Mamatharaj Photography is Khammam's leading wedding and portrait studio. Led by Mamatha Raj, we specialise in candid wedding photography, cinematic pre-wedding shoots and editorial portraits across Khammam, Telangana and beyond. Our 5.0-star Google rating and 500+ weddings make us the top choice for couples looking for the best photographer in Khammam.",
+      "Mamatharaj Photography is Khammam's leading wedding and portrait studio. Led by Mamatharaj, we specialise in candid wedding photography, cinematic pre-wedding shoots and editorial portraits across Khammam, Telangana and beyond. Our 5.0-star Google rating and 500+ weddings make us the top choice for couples looking for the best photographer in Khammam.",
   },
   {
     question: "What photography services do you offer in Khammam?",
@@ -129,7 +129,7 @@ export function buildLocalBusinessSchema(): Record<string, unknown> {
     name: SITE_NAME,
     legalName: SITE_NAME,
     alternateName: [
-      "Mamatha Raj Photography",
+      "Mamatharaj Photography",
       "Mamatharaj Photography Khammam",
       "Mamatharaj Studio",
     ],
@@ -187,7 +187,7 @@ export function buildLocalBusinessSchema(): Record<string, unknown> {
         author: { "@type": "Person", name: "Priya S." },
         reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
         reviewBody:
-          "Best wedding photographer in Khammam. Mamatha Raj captured our wedding beautifully with candid, emotional shots.",
+          "Best wedding photographer in Khammam. Mamatharaj captured our wedding beautifully with candid, emotional shots.",
       },
       {
         "@type": "Review",
@@ -249,7 +249,7 @@ export function buildPersonSchema(): Record<string, unknown> {
     alternateName: "Mamatharaj",
     jobTitle: "Wedding & Portrait Photographer",
     description:
-      "Mamatha Raj is a professional wedding and portrait photographer based in Khammam, Telangana, with over a decade of experience and 500+ weddings captured.",
+      "Mamatharaj is a professional wedding and portrait photographer based in Khammam, Telangana, with over a decade of experience and 500+ weddings captured.",
     url: `${SITE_URL}/about`,
     image: `${SITE_URL}/og-image.jpg`,
     email: EMAIL,

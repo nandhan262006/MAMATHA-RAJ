@@ -15,10 +15,10 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "About Mamatharaj Photography | Best Photographer in Khammam",
   description:
-    "Meet Mamatha Raj — Khammam's best photographer. 500+ weddings, 12+ years of craft and a 5.0-star Google rating. Learn about Mamatharaj Photography, Khammam's top-rated wedding and portrait studio.",
+    "Meet Mamatharaj — Khammam's best photographer. 500+ weddings, 12+ years of craft and a 5.0-star Google rating. Learn about Mamatharaj Photography, Khammam's top-rated wedding and portrait studio.",
   keywords: [
     "about Mamatharaj Photography",
-    "Mamatha Raj photographer Khammam",
+    "Mamatharaj photographer Khammam",
     "best photographer in Khammam about",
     "Khammam photography studio story",
     "wedding photographer Khammam about",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Mamatharaj Photography | Best Photographer in Khammam",
     description:
-      "Meet Mamatha Raj — Khammam's best photographer. 500+ weddings, 12+ years of craft and a 5.0-star Google rating.",
+      "Meet Mamatharaj — Khammam's best photographer. 500+ weddings, 12+ years of craft and a 5.0-star Google rating.",
     url: `${SITE_URL}/about`,
     type: "website",
   },
@@ -41,14 +41,14 @@ const aboutSchema = {
   name: `About ${SITE_NAME}`,
   url: `${SITE_URL}/about`,
   description:
-    "Learn about Mamatharaj Photography, Khammam's best wedding and portrait photographer led by Mamatha Raj.",
+    "Learn about Mamatharaj Photography, Khammam's best wedding and portrait photographer led by Mamatharaj.",
   mainEntity: {
     "@type": "Person",
     name: PHOTOGRAPHER_NAME,
     alternateName: "Mamatharaj",
     jobTitle: "Wedding & Portrait Photographer",
     description:
-      "Mamatha Raj is a professional wedding and portrait photographer based in Khammam, Telangana, with over a decade of experience and 500+ weddings captured.",
+      "Mamatharaj is a professional wedding and portrait photographer based in Khammam, Telangana, with over a decade of experience and 500+ weddings captured.",
     address: { "@type": "PostalAddress", ...ADDRESS },
     geo: { "@type": "GeoCoordinates", ...GEO },
   },

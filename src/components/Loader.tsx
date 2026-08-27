@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const LETTERS = "Mamatha Raj".split("");
+const LETTERS = "Mamatharaj".split("");
 
 function hasShownBefore(): boolean {
   try {

@@ -15,7 +15,7 @@ export const DEFAULT_TESTIMONIALS: Omit<Testimonial, "id">[] = [
     imageUrl: "/downloads/2026-07-20_07-34-52_UTC_2.jpg",
     ratio: "2743/1837",
     quote:
-      "Mamatha Raj didn't just photograph our wedding — they captured our souls. Every time we look at the album, we relive those magical moments. The attention to detail and the emotional depth in their work is unmatched.",
+      "Mamatharaj didn't just photograph our wedding — they captured our souls. Every time we look at the album, we relive those magical moments. The attention to detail and the emotional depth in their work is unmatched.",
     author: "Ananya & Rohit",
     role: "Udaipur Wedding · December 2024",
   },
@@ -31,7 +31,7 @@ export const DEFAULT_TESTIMONIALS: Omit<Testimonial, "id">[] = [
     imageUrl: "/downloads/2026-06-18_06-13-07_UTC_3.jpg",
     ratio: "3391/4096",
     quote:
-      "We were nervous about our destination wedding in Goa, but the Mamatha Raj team made everything seamless. The photos are breathtaking — they turned our celebration into a work of art that we'll treasure forever.",
+      "We were nervous about our destination wedding in Goa, but the Mamatharaj team made everything seamless. The photos are breathtaking — they turned our celebration into a work of art that we'll treasure forever.",
     author: "Meera & Vikram",
     role: "Goa Wedding · October 2024",
   },

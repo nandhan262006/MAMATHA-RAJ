@@ -83,10 +83,10 @@ export default function Navbar() {
       >
         <img
           src="/logo.png"
-          alt="Mamatha Raj logo"
+          alt="Mamatharaj logo"
           style={{ height: 40, width: "auto", display: "block" }}
         />
-        Mamatha <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>Raj</em>
+        Mamatharaj
       </a>
 
       <ul

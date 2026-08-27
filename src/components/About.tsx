@@ -125,7 +125,7 @@ export default function About({ content }: { content: AboutContent }) {
           >
             <img
               src={content.imageUrl}
-              alt="Mamatha Raj — Best Photographer in Khammam at work"
+              alt="Mamatharaj — Best Photographer in Khammam at work"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
             <div
