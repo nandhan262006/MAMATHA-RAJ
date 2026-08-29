@@ -6,6 +6,7 @@ import Services from "@/components/Services";
 import Featured from "@/components/Featured";
 import Testimonials from "@/components/Testimonials";
 import Process from "@/components/Process";
+import Quotation from "@/components/Quotation";
 import CtaBanner from "@/components/CtaBanner";
 import Faq from "@/components/Faq";
 import Map from "@/components/Map";
@@ -65,6 +66,7 @@ export default async function Home() {
         }))}
       />
       <Process />
+      <Quotation />
       <CtaBanner />
       <Map />
       <Faq />

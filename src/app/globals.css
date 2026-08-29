@@ -423,6 +423,9 @@ body {
   .process-steps { grid-template-columns: 1fr 1fr !important; }
   .process-steps::before { display: none !important; }
 
+  .quotation-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+  .quotation-features { grid-template-columns: 1fr 1fr !important; }
+
   .contact-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
   .contact-form > div { grid-template-columns: 1fr !important; }
 
@@ -435,4 +438,5 @@ body {
 @media (max-width: 480px) {
   .process-steps { grid-template-columns: 1fr !important; }
   .footer-grid { grid-template-columns: 1fr !important; }
+  .quotation-features { grid-template-columns: 1fr !important; }
 }
