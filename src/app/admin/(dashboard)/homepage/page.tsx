@@ -16,7 +16,7 @@ export default async function HomepageAdminPage() {
       </h1>
       <p className="mt-3 max-w-xl text-[#6B6259]">
         The background collage on the homepage has 24 slots. Replace any slot
-        with a new photo (JPG, PNG, WebP or AVIF, up to 15 MB) — changes go
+        with a new photo (JPG, PNG, WebP or AVIF, up to 40 MB) — changes go
         live immediately.
       </p>
 

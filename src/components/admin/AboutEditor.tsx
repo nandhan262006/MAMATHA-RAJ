@@ -122,7 +122,7 @@ export default function AboutEditor({ content }: { content: AboutContent }) {
             ) : null}
             <p className="max-w-xs text-xs leading-relaxed text-[#6B6259]/80">
               Shown at 3:4 ratio next to the about text. JPG, PNG, WebP or AVIF,
-              up to 15 MB.
+              up to 40 MB.
             </p>
           </div>
         </div>

@@ -18,7 +18,7 @@ function getS3(): S3Client {
 }
 
 const BUCKET = "mamatharaj";
-const MAX_BYTES = 15 * 1024 * 1024;
+const MAX_BYTES = 40 * 1024 * 1024;
 
 const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -103,7 +103,7 @@ export async function uploadImage(
 ): Promise<UploadResult> {
   if (file.size === 0) return { ok: false, error: "Empty file." };
   if (file.size > MAX_BYTES)
-    return { ok: false, error: "File too large (max 15 MB)." };
+    return { ok: false, error: "File too large (max 40 MB)." };
 
   const ext = ALLOWED_TYPES[file.type];
   if (!ext)

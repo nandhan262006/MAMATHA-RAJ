@@ -86,7 +86,7 @@ export default function OgImageEditor({
             <p className="text-xs text-green-700">{state.message}</p>
           ) : null}
           <p className="max-w-xs text-xs leading-relaxed text-[#6B6259]/80">
-            Recommended 1200×630 px. JPG, PNG, WebP or AVIF, up to 15 MB.
+            Recommended 1200×630 px. JPG, PNG, WebP or AVIF, up to 40 MB.
           </p>
         </div>
       </div>
