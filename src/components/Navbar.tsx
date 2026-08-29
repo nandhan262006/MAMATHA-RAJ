@@ -20,13 +20,15 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const isHome = pathname === "/";
+  const hidden = isHome && !scrolled && !open;
   const resolveHref = (href: string) =>
     href.startsWith("#") && !isHome ? `/${href}` : href;
 
   useEffect(() => {
     if (pathname.startsWith("/admin")) return;
     const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
@@ -64,7 +66,10 @@ export default function Navbar() {
         justifyContent: "space-between",
         background: "rgba(250, 246, 241, 0.98)",
         boxShadow: "0 1px 0 rgba(26,23,20,0.06)",
-        transition: "padding 0.4s ease",
+        transition: "padding 0.4s ease, opacity 0.4s ease, transform 0.4s ease",
+        opacity: hidden ? 0 : 1,
+        transform: hidden ? "translateY(-100%)" : "translateY(0)",
+        pointerEvents: hidden ? "none" : "auto",
       }}
     >
       <a
