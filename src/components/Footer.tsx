@@ -22,7 +22,7 @@ const CONTACTS = [
   { href: "tel:+919010627571", label: PHONE_DISPLAY },
   { href: `mailto:${EMAIL}`, label: EMAIL },
   {
-    href: "https://instagram.com/mamatharaj.studio",
+    href: "https://www.instagram.com/mamatha__raj.photography/",
     label: "Instagram",
     external: true,
   },

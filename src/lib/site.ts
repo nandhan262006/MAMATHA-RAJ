@@ -23,7 +23,7 @@ export const GEO = { latitude: 17.2419046, longitude: 80.1315073 } as const;
 export const MAPS_URL = "https://maps.app.goo.gl/CBEw1QkvkM37HUgt8";
 export const GOOGLE_REVIEWS_URL =
   "https://maps.app.goo.gl/CBEw1QkvkM37HUgt8";
-export const INSTAGRAM_URL = "https://instagram.com/mamatharaj.studio";
+export const INSTAGRAM_URL = "https://www.instagram.com/mamatha__raj.photography/";
 
 export const SAME_AS = [
   INSTAGRAM_URL,

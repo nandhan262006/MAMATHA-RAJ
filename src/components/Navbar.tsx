@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const INSTAGRAM_URL = "https://instagram.com/mamatharaj.studio";
+const INSTAGRAM_URL = "https://www.instagram.com/mamatha__raj.photography/";
 
 const LINKS = [
   { href: "/about", label: "About" },

@@ -133,8 +133,8 @@ export default function Contact() {
                     </svg>
                   }
                   label="Instagram"
-                  value="@mamatharaj.studio"
-                  href="https://instagram.com/mamatharaj.studio"
+                  value="@mamatha__raj.photography"
+                  href="https://www.instagram.com/mamatha__raj.photography/"
                 />
               </div>
 
@@ -360,7 +360,7 @@ export default function Contact() {
         }}
       >
         <a
-          href="https://instagram.com/mamatharaj.studio"
+          href="https://www.instagram.com/mamatha__raj.photography/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Follow on Instagram"

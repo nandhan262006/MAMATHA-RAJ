@@ -104,7 +104,7 @@ India-specific:
 Global (also help):
   - Yelp            https://biz.yelp.com
   - Facebook Page   https://www.facebook.com/pages/create
-  - Instagram       (already: @mamatharaj.studio)
+  - Instagram       (already: @mamatha__raj.photography)
   - Pinterest       https://www.pinterest.com (business account)
   - YouTube         (channel: post wedding teasers)
   - LinkedIn        (company page)
@@ -117,7 +117,7 @@ STEP 5 — SOCIAL PROFILES (link back to your site)
 --------------------------------------------------------------
 Create/complete these and add "https://mamatharajphotography.in"
 in the bio/link field of each:
-  - Instagram  @mamatharaj.studio  (already in schema)
+  - Instagram  @mamatha__raj.photography  (already in schema)
   - Facebook   facebook.com/mamatharajphotography
   - YouTube    (post wedding highlight films — great for SEO)
   - Pinterest  (pin portfolio images — drives traffic)
