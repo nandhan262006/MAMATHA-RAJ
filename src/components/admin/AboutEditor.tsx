@@ -7,6 +7,7 @@ import {
   resetAboutImage,
   type AboutActionState,
 } from "@/app/admin/about-actions";
+import { useR2Upload } from "./useR2Upload";
 import type { AboutContent } from "@/lib/about";
 
 const idle: AboutActionState = { status: "idle" };
@@ -55,6 +56,7 @@ export default function AboutEditor({ content }: { content: AboutContent }) {
     replaceAboutImage,
     idle
   );
+  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
@@ -81,31 +83,35 @@ export default function AboutEditor({ content }: { content: AboutContent }) {
 
           <div className="space-y-3">
             <form ref={formRef} action={imgAction}>
+              <input type="hidden" name="key" ref={keyRef} />
               <input
                 type="file"
-                name="file"
                 accept="image/jpeg,image/png,image/webp,image/avif"
                 className="hidden"
                 id="about-file"
                 onChange={(e) => {
-                  if (e.target.files?.length) formRef.current?.requestSubmit();
+                  const file = e.target.files?.[0];
                   e.target.value = "";
+                  if (!file) return;
+                  handleFile(file).then((ok) => {
+                    if (ok) formRef.current?.requestSubmit();
+                  });
                 }}
               />
               <button
                 type="button"
-                disabled={imgPending}
+                disabled={imgPending || uploading}
                 onClick={() => document.getElementById("about-file")?.click()}
                 className="rounded-lg bg-[#C4552D] px-4 py-2 text-sm font-medium text-[#FFF9F2] transition hover:bg-[#A3431F] disabled:opacity-60"
               >
-                {imgPending ? "Uploading…" : "Replace image"}
+                {imgPending || uploading ? "Uploading…" : "Replace image"}
               </button>
             </form>
             {content.imageIsCustom ? (
               <form action={resetAboutImage}>
                 <button
                   type="submit"
-                  disabled={imgPending}
+                  disabled={imgPending || uploading}
                   className="text-xs text-[#6B6259] underline-offset-2 transition hover:text-[#C4552D] hover:underline disabled:opacity-60"
                 >
                   Reset to original
@@ -114,6 +120,9 @@ export default function AboutEditor({ content }: { content: AboutContent }) {
             ) : (
               <p className="text-xs text-[#6B6259]">Original image in use</p>
             )}
+            {uploadError ? (
+              <p className="text-xs text-[#A3431F]">{uploadError}</p>
+            ) : null}
             {imgState.status === "error" ? (
               <p className="text-xs text-[#A3431F]">{imgState.message}</p>
             ) : null}

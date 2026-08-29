@@ -3,7 +3,9 @@ import {
   S3Client,
   PutObjectCommand,
   DeleteObjectCommand,
+  GetObjectCommand,
 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import sharp from "sharp";
 
 function getS3(): S3Client {
@@ -19,6 +21,8 @@ function getS3(): S3Client {
 
 const BUCKET = "mamatharaj";
 const MAX_BYTES = 40 * 1024 * 1024;
+const RAW_PREFIX = "uploads/raw";
+const IMMUTABLE_CACHE = "public, max-age=31536000, immutable";
 
 const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -32,6 +36,22 @@ export type UploadResult =
   | { ok: false; error: string };
 
 const THUMB_WIDTH = 800;
+
+const EXT_TO_TYPE: Record<string, string> = {
+  jpg: "image/jpeg",
+  png: "image/png",
+  webp: "image/webp",
+  avif: "image/avif",
+};
+
+function extFromKey(key: string): string {
+  const m = key.match(/\.([a-zA-Z0-9]+)$/);
+  return m ? m[1].toLowerCase() : "";
+}
+
+function isRawKey(key: string): boolean {
+  return key.startsWith(`${RAW_PREFIX}/`) && !!extFromKey(key);
+}
 
 async function uploadThumb(body: Buffer, key: string): Promise<string | undefined> {
   try {
@@ -55,6 +75,99 @@ async function uploadThumb(body: Buffer, key: string): Promise<string | undefine
   } catch (e) {
     console.error("R2 thumb upload failed:", e);
     return undefined;
+  }
+}
+
+export type PresignResult =
+  | { ok: true; key: string; uploadUrl: string; contentType: string }
+  | { ok: false; error: string };
+
+export async function presignUpload(
+  contentType: string
+): Promise<PresignResult> {
+  const ext = ALLOWED_TYPES[contentType];
+  if (!ext) {
+    return {
+      ok: false,
+      error: `Unsupported format (${contentType || "unknown"}). Use JPG, PNG, WebP or AVIF.`,
+    };
+  }
+
+  const key = `${RAW_PREFIX}/${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}.${ext}`;
+
+  try {
+    const uploadUrl = await getSignedUrl(
+      getS3(),
+      new PutObjectCommand({
+        Bucket: BUCKET,
+        Key: key,
+        ContentType: contentType,
+        CacheControl: IMMUTABLE_CACHE,
+      }),
+      { expiresIn: 3600 }
+    );
+    return { ok: true, key, uploadUrl, contentType };
+  } catch (e) {
+    console.error("R2 presign failed:", e);
+    return { ok: false, error: "Could not start upload. Try again." };
+  }
+}
+
+export type FinalizeResult =
+  | { ok: true; url: string; key: string; thumbUrl?: string }
+  | { ok: false; error: string };
+
+async function getObject(key: string): Promise<Buffer> {
+  const res = await getS3().send(
+    new GetObjectCommand({ Bucket: BUCKET, Key: key })
+  );
+  const body = res.Body;
+  if (!body) throw new Error("Empty object");
+  return Buffer.from(await body.transformToByteArray());
+}
+
+export async function finalizeUpload(
+  rawKey: string,
+  folder: string,
+  opts?: UploadOptions
+): Promise<FinalizeResult> {
+  if (!isRawKey(rawKey)) {
+    return { ok: false, error: "Invalid upload reference." };
+  }
+
+  const ext = extFromKey(rawKey);
+  const contentType = EXT_TO_TYPE[ext] ?? "application/octet-stream";
+
+  try {
+    const raw = await getObject(rawKey);
+    const body = opts?.maxWidth ? await optimizeBody(raw, ext, opts.maxWidth) : raw;
+
+    const key = `${folder}/${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 8)}.${ext}`;
+
+    await getS3().send(
+      new PutObjectCommand({
+        Bucket: BUCKET,
+        Key: key,
+        Body: body,
+        ContentType: contentType,
+        CacheControl: IMMUTABLE_CACHE,
+      })
+    );
+
+    const base = process.env.R2_PUBLIC_URL?.replace(/\/$/, "") ?? "";
+    const thumbUrl = opts?.thumb ? await uploadThumb(body, key) : undefined;
+
+    await deleteImage(rawKey).catch(() => {});
+
+    return { ok: true, url: `${base}/${key}`, key, thumbUrl };
+  } catch (e) {
+    console.error("R2 finalize failed:", e);
+    await deleteImage(rawKey).catch(() => {});
+    return { ok: false, error: "Upload to storage failed. Try again." };
   }
 }
 

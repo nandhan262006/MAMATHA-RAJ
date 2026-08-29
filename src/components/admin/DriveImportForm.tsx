@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { runImport, type Progress } from "./runImport";
+import { runDriveImport, type Progress } from "./runImport";
 
 export default function DriveImportForm({ target }: { target: "photos" | "story" }) {
   const [url, setUrl] = useState("");
@@ -19,7 +19,7 @@ export default function DriveImportForm({ target }: { target: "photos" | "story"
       total: 0,
       name: "Reading Drive folder…",
     });
-    runImport(target, (fd) => fd.set("url", link), (p) =>
+    runDriveImport(target, link, (p) =>
       setProg((prev) => ({
         ...(prev ?? {
           phase: "working",

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getDb, ensureSchema } from "@/lib/db";
-import { uploadImage, deleteImage } from "@/lib/r2";
+import { finalizeUpload, deleteImage } from "@/lib/r2";
 import { isAuthenticated } from "@/lib/session";
 
 export type OgImageActionState =
@@ -30,12 +30,12 @@ export async function replaceOgImage(
   const denied = await requireAuth();
   if (denied) return denied;
 
-  const file = formData.get("file");
-  if (!(file instanceof File)) {
+  const key = String(formData.get("key") ?? "").trim();
+  if (!key) {
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "og", { maxWidth: 1200 });
+  const uploaded = await finalizeUpload(key, "og", { maxWidth: 1200 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {

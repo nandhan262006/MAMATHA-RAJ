@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { getDb, ensureSchema } from "@/lib/db";
-import { uploadImage } from "@/lib/r2";import {
+import { uploadImage, finalizeUpload } from "@/lib/r2";
+import {
   listDriveImages,
   downloadDriveImage,
   parseDriveFolderId,
@@ -58,13 +59,24 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: "Invalid target." }, { status: 400 });
   }
 
-  const files = formData
-    .getAll("file")
-    .filter((f): f is File => f instanceof File && f.size > 0);
+  const keysRaw = String(formData.get("keys") ?? "").trim();
+  const clientFailed = Number(formData.get("failed") ?? 0) || 0;
+
+  let keys: string[] = [];
+  if (keysRaw) {
+    try {
+      const parsed = JSON.parse(keysRaw);
+      if (Array.isArray(parsed)) {
+        keys = parsed.filter((k): k is string => typeof k === "string");
+      }
+    } catch {
+      keys = [];
+    }
+  }
 
   const driveUrl = String(formData.get("url") ?? "").trim();
 
-  if (files.length === 0 && !driveUrl) {
+  if (keys.length === 0 && !driveUrl) {
     return Response.json({ error: "Nothing to import." }, { status: 400 });
   }
 
@@ -77,10 +89,10 @@ export async function POST(req: NextRequest) {
 
         let items: { name: string; load: () => Promise<File> }[] = [];
 
-        if (files.length > 0) {
-          items = files.map((f) => ({
-            name: f.name || "photo",
-            load: () => Promise.resolve(f),
+        if (keys.length > 0) {
+          items = keys.map((k) => ({
+            name: k,
+            load: () => Promise.reject(new Error("unused")),
           }));
         } else {
           const folderId = parseDriveFolderId(driveUrl);
@@ -120,8 +132,13 @@ export async function POST(req: NextRequest) {
 
         await runPool(items, async (item, i) => {
           try {
-            const file = await item.load();
-            const uploaded = await uploadImage(file, folder, { thumb: true });
+            let uploaded;
+            if (keys.length > 0) {
+              uploaded = await finalizeUpload(item.name, folder, { thumb: true });
+            } else {
+              const file = await item.load();
+              uploaded = await uploadImage(file, folder, { thumb: true });
+            }
             if (!uploaded.ok) {
               failed++;
             } else {
@@ -173,7 +190,8 @@ export async function POST(req: NextRequest) {
           `Imported ${rows.length} photo${rows.length === 1 ? "" : "s"}.`,
         ];
         if (skipped > 0) parts.push(`${skipped} skipped.`);
-        if (failed > 0) parts.push(`${failed} failed.`);
+        const totalFailed = failed + clientFailed;
+        if (totalFailed > 0) parts.push(`${totalFailed} failed.`);
         push({
           type: "done",
           message: parts.join(" "),

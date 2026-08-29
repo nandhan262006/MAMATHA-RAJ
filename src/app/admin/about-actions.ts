@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getDb, ensureSchema } from "@/lib/db";
-import { uploadImage, deleteImage } from "@/lib/r2";
+import { finalizeUpload, deleteImage } from "@/lib/r2";
 import { isAuthenticated } from "@/lib/session";
 
 export type AboutActionState =
@@ -75,12 +75,12 @@ export async function replaceAboutImage(
   const denied = await requireAuth();
   if (denied) return denied;
 
-  const file = formData.get("file");
-  if (!(file instanceof File)) {
+  const key = String(formData.get("key") ?? "").trim();
+  if (!key) {
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "about", { maxWidth: 1600 });
+  const uploaded = await finalizeUpload(key, "about", { maxWidth: 1600 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {

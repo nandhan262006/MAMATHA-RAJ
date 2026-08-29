@@ -7,6 +7,7 @@ import {
   type TestimonialActionState,
 } from "@/app/admin/testimonial-actions";
 import { DeleteTestimonialButton } from "@/components/admin/TestimonialButtons";
+import { useR2Upload } from "./useR2Upload";
 import type { Testimonial } from "@/lib/testimonials";
 
 const idle: TestimonialActionState = { status: "idle" };
@@ -26,7 +27,9 @@ export default function TestimonialEditorCard({
     replaceTestimonialImage,
     idle
   );
+  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
+  const busy = imgPending || uploading || savePending;
 
   return (
     <div className="rounded-2xl border border-[#1A1714]/10 bg-white p-5">
@@ -49,7 +52,7 @@ export default function TestimonialEditorCard({
             ) : (
               <button
                 type="button"
-                disabled={imgPending || savePending}
+                disabled={busy}
                 onClick={() =>
                   document.getElementById(`tst-file-${testimonial.id}`)?.click()
                 }
@@ -59,39 +62,46 @@ export default function TestimonialEditorCard({
                   +
                 </span>
                 <span className="px-2 text-center text-[10px] uppercase tracking-wider">
-                  {imgPending ? "Uploading…" : "No image"}
+                  {imgPending || uploading ? "Uploading…" : "No image"}
                 </span>
               </button>
             )}
           </div>
           <form ref={formRef} action={imgAction} className="mt-2">
             <input type="hidden" name="id" value={testimonial.id} />
+            <input type="hidden" name="key" ref={keyRef} />
             <input
               type="file"
-              name="file"
               accept="image/jpeg,image/png,image/webp,image/avif"
               className="hidden"
               id={`tst-file-${testimonial.id}`}
               onChange={(e) => {
-                if (e.target.files?.length) formRef.current?.requestSubmit();
+                const file = e.target.files?.[0];
                 e.target.value = "";
+                if (!file) return;
+                handleFile(file).then((ok) => {
+                  if (ok) formRef.current?.requestSubmit();
+                });
               }}
             />
             <button
               type="button"
-              disabled={imgPending || savePending}
+              disabled={busy}
               onClick={() =>
                 document.getElementById(`tst-file-${testimonial.id}`)?.click()
               }
               className="w-full rounded-lg border border-[#1A1714]/15 px-3 py-1.5 text-xs text-[#6B6259] transition hover:border-[#C4552D] hover:text-[#C4552D] disabled:opacity-60"
             >
-              {imgPending
+              {imgPending || uploading
                 ? "Uploading…"
                 : testimonial.imageUrl
                   ? "Replace image"
                   : "Upload image"}
             </button>
           </form>
+          {uploadError ? (
+            <p className="mt-2 text-xs text-[#A3431F]">{uploadError}</p>
+          ) : null}
           {imgState.status === "error" ? (
             <p className="mt-2 text-xs text-[#A3431F]">{imgState.message}</p>
           ) : null}
@@ -165,7 +175,7 @@ export default function TestimonialEditorCard({
           <div className="flex items-center gap-3">
             <button
               type="submit"
-              disabled={savePending || imgPending}
+              disabled={savePending || imgPending || uploading}
               className="rounded-lg bg-[#C4552D] px-4 py-2 text-sm font-medium text-[#FFF9F2] transition hover:bg-[#A3431F] disabled:opacity-60"
             >
               {savePending ? "Saving…" : "Save testimonial"}

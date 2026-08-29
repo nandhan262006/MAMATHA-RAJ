@@ -6,6 +6,7 @@ import {
   resetHeroImage,
   type HeroActionState,
 } from "@/app/admin/hero-actions";
+import { useR2Upload } from "./useR2Upload";
 
 const idle: HeroActionState = { status: "idle" };
 
@@ -26,6 +27,7 @@ export default function HeroSlotCard({
     resetHeroImage,
     idle
   );
+  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
 
   const state =
@@ -57,24 +59,28 @@ export default function HeroSlotCard({
       <div className="space-y-2 p-3">
         <form ref={formRef} action={replaceAction}>
           <input type="hidden" name="slot" value={slot} />
+          <input type="hidden" name="key" ref={keyRef} />
           <input
             type="file"
-            name="file"
             accept="image/jpeg,image/png,image/webp,image/avif"
             className="hidden"
             id={`file-${slot}`}
             onChange={(e) => {
-              if (e.target.files?.length) formRef.current?.requestSubmit();
+              const file = e.target.files?.[0];
               e.target.value = "";
+              if (!file) return;
+              handleFile(file).then((ok) => {
+                if (ok) formRef.current?.requestSubmit();
+              });
             }}
           />
           <button
             type="button"
-            disabled={replacePending || resetPending}
+            disabled={replacePending || resetPending || uploading}
             onClick={() => document.getElementById(`file-${slot}`)?.click()}
             className="w-full rounded-lg bg-[#C4552D] px-3 py-2 text-sm font-medium text-[#FFF9F2] transition hover:bg-[#A3431F] disabled:opacity-60"
           >
-            {replacePending ? "Uploading…" : "Replace"}
+            {replacePending || uploading ? "Uploading…" : "Replace"}
           </button>
         </form>
 
@@ -87,7 +93,7 @@ export default function HeroSlotCard({
               <input type="hidden" name="slot" value={slot} />
               <button
                 type="submit"
-                disabled={replacePending || resetPending}
+                disabled={replacePending || resetPending || uploading}
                 className="text-xs text-[#6B6259] underline-offset-2 transition hover:text-[#C4552D] hover:underline disabled:opacity-60"
               >
                 Reset
@@ -96,6 +102,9 @@ export default function HeroSlotCard({
           ) : null}
         </div>
 
+        {uploadError ? (
+          <p className="text-xs text-[#A3431F]">{uploadError}</p>
+        ) : null}
         {state?.status === "error" ? (
           <p className="text-xs text-[#A3431F]">{state.message}</p>
         ) : null}

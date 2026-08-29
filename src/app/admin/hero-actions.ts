@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getDb, ensureSchema } from "@/lib/db";
 import { HERO_SLOTS } from "@/lib/hero-images";
-import { uploadImage, deleteImage } from "@/lib/r2";
+import { finalizeUpload, deleteImage } from "@/lib/r2";
 import { isAuthenticated } from "@/lib/session";
 
 export type HeroActionState =
@@ -32,16 +32,16 @@ export async function replaceHeroImage(
   if (denied) return denied;
 
   const slot = Number(formData.get("slot"));
-  const file = formData.get("file");
+  const key = String(formData.get("key") ?? "").trim();
 
   if (!Number.isInteger(slot) || slot < 1 || slot > HERO_SLOTS) {
     return { status: "error", message: "Invalid slot." };
   }
-  if (!(file instanceof File)) {
+  if (!key) {
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "hero", { maxWidth: 900 });
+  const uploaded = await finalizeUpload(key, "hero", { maxWidth: 900 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {

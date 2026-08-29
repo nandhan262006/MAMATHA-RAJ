@@ -6,6 +6,7 @@ import {
   resetOgImage,
   type OgImageActionState,
 } from "@/app/admin/og-image-actions";
+import { useR2Upload } from "./useR2Upload";
 
 const idle: OgImageActionState = { status: "idle" };
 
@@ -17,7 +18,9 @@ export default function OgImageEditor({
   isCustom: boolean;
 }) {
   const [state, action, pending] = useActionState(replaceOgImage, idle);
+  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
+  const busy = pending || uploading;
 
   return (
     <section className="rounded-2xl border border-[#1A1714]/10 bg-white p-6">
@@ -46,31 +49,35 @@ export default function OgImageEditor({
 
         <div className="space-y-3">
           <form ref={formRef} action={action}>
+            <input type="hidden" name="key" ref={keyRef} />
             <input
               type="file"
-              name="file"
               accept="image/jpeg,image/png,image/webp,image/avif"
               className="hidden"
               id="og-file"
               onChange={(e) => {
-                if (e.target.files?.length) formRef.current?.requestSubmit();
+                const file = e.target.files?.[0];
                 e.target.value = "";
+                if (!file) return;
+                handleFile(file).then((ok) => {
+                  if (ok) formRef.current?.requestSubmit();
+                });
               }}
             />
             <button
               type="button"
-              disabled={pending}
+              disabled={busy}
               onClick={() => document.getElementById("og-file")?.click()}
               className="rounded-lg bg-[#C4552D] px-4 py-2 text-sm font-medium text-[#FFF9F2] transition hover:bg-[#A3431F] disabled:opacity-60"
             >
-              {pending ? "Uploading…" : "Replace image"}
+              {busy ? "Uploading…" : "Replace image"}
             </button>
           </form>
           {isCustom ? (
             <form action={resetOgImage}>
               <button
                 type="submit"
-                disabled={pending}
+                disabled={busy}
                 className="text-xs text-[#6B6259] underline-offset-2 transition hover:text-[#C4552D] hover:underline disabled:opacity-60"
               >
                 Reset to original
@@ -79,6 +86,9 @@ export default function OgImageEditor({
           ) : (
             <p className="text-xs text-[#6B6259]">Original image in use</p>
           )}
+          {uploadError ? (
+            <p className="text-xs text-[#A3431F]">{uploadError}</p>
+          ) : null}
           {state.status === "error" ? (
             <p className="text-xs text-[#A3431F]">{state.message}</p>
           ) : null}

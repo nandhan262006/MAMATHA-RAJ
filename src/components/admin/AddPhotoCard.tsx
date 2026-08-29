@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import {
-  runImport,
+  runLocalImport,
   initialProgress,
   type Progress,
 } from "./runImport";
@@ -15,9 +15,9 @@ export default function AddPhotoCard() {
   function start(files: FileList | File[]) {
     if (!files.length) return;
     setProg({ ...initialProgress });
-    runImport("photos", (fd) => {
-      Array.from(files).forEach((f) => fd.append("file", f));
-    }, (p) => setProg((prev) => ({ ...(prev ?? initialProgress), ...p })));
+    runLocalImport("photos", Array.from(files), (p) =>
+      setProg((prev) => ({ ...(prev ?? initialProgress), ...p }))
+    );
   }
 
   return (

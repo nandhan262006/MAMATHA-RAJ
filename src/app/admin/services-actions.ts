@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getDb, ensureSchema } from "@/lib/db";
-import { uploadImage, deleteImage } from "@/lib/r2";
+import { finalizeUpload, deleteImage } from "@/lib/r2";
 import { isAuthenticated } from "@/lib/session";
 
 export type ServiceActionState =
@@ -63,16 +63,16 @@ export async function replaceServiceImage(
   if (denied) return denied;
 
   const id = Number(formData.get("id"));
-  const file = formData.get("file");
+  const key = String(formData.get("key") ?? "").trim();
 
   if (!Number.isInteger(id) || id < 1) {
     return { status: "error", message: "Invalid service card." };
   }
-  if (!(file instanceof File)) {
+  if (!key) {
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "services", { maxWidth: 1600 });
+  const uploaded = await finalizeUpload(key, "services", { maxWidth: 1600 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {

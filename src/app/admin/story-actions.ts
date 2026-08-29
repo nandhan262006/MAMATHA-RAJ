@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getDb, ensureSchema } from "@/lib/db";
-import { uploadImage, deleteImage, deleteImageAndThumbFromUrl } from "@/lib/r2";
+import { finalizeUpload, deleteImage, deleteImageAndThumbFromUrl } from "@/lib/r2";
 import { isAuthenticated } from "@/lib/session";
 
 export type StoryActionState =
@@ -100,12 +100,12 @@ export async function replaceStoryImage(
     return { status: "error", message: "Unknown image slot." };
   }
 
-  const file = formData.get("file");
-  if (!(file instanceof File)) {
+  const rawKey = String(formData.get("key") ?? "").trim();
+  if (!rawKey) {
     return { status: "error", message: "No file selected." };
   }
 
-  const uploaded = await uploadImage(file, "story", { maxWidth: 1600 });
+  const uploaded = await finalizeUpload(rawKey, "story", { maxWidth: 1600 });
   if (!uploaded.ok) return { status: "error", message: uploaded.error };
 
   try {

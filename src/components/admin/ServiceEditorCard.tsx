@@ -7,6 +7,7 @@ import {
   type ServiceActionState,
 } from "@/app/admin/services-actions";
 import { DeleteServiceButton } from "@/components/admin/ServiceCardButtons";
+import { useR2Upload } from "./useR2Upload";
 import type { ServiceCard } from "@/lib/services";
 
 const idle: ServiceActionState = { status: "idle" };
@@ -23,7 +24,9 @@ export default function ServiceEditorCard({
     replaceServiceImage,
     idle
   );
+  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
+  const busy = imgPending || uploading || savePending;
 
   return (
     <div className="rounded-2xl border border-[#1A1714]/10 bg-white p-5">
@@ -46,7 +49,7 @@ export default function ServiceEditorCard({
             ) : (
               <button
                 type="button"
-                disabled={imgPending || savePending}
+                disabled={busy}
                 onClick={() =>
                   document.getElementById(`svc-file-${service.id}`)?.click()
                 }
@@ -56,35 +59,46 @@ export default function ServiceEditorCard({
                   +
                 </span>
                 <span className="px-2 text-center text-[10px] uppercase tracking-wider">
-                  {imgPending ? "Uploading…" : "No image"}
+                  {imgPending || uploading ? "Uploading…" : "No image"}
                 </span>
               </button>
             )}
           </div>
           <form ref={formRef} action={imgAction} className="mt-2">
             <input type="hidden" name="id" value={service.id} />
+            <input type="hidden" name="key" ref={keyRef} />
             <input
               type="file"
-              name="file"
               accept="image/jpeg,image/png,image/webp,image/avif"
               className="hidden"
               id={`svc-file-${service.id}`}
               onChange={(e) => {
-                if (e.target.files?.length) formRef.current?.requestSubmit();
+                const file = e.target.files?.[0];
                 e.target.value = "";
+                if (!file) return;
+                handleFile(file).then((ok) => {
+                  if (ok) formRef.current?.requestSubmit();
+                });
               }}
             />
             <button
               type="button"
-              disabled={imgPending || savePending}
+              disabled={busy}
               onClick={() =>
                 document.getElementById(`svc-file-${service.id}`)?.click()
               }
               className="w-full rounded-lg border border-[#1A1714]/15 px-3 py-1.5 text-xs text-[#6B6259] transition hover:border-[#C4552D] hover:text-[#C4552D] disabled:opacity-60"
             >
-              {imgPending ? "Uploading…" : service.imageUrl ? "Replace image" : "Upload image"}
+              {imgPending || uploading
+                ? "Uploading…"
+                : service.imageUrl
+                  ? "Replace image"
+                  : "Upload image"}
             </button>
           </form>
+          {uploadError ? (
+            <p className="mt-2 text-xs text-[#A3431F]">{uploadError}</p>
+          ) : null}
           {imgState.status === "error" ? (
             <p className="mt-2 text-xs text-[#A3431F]">{imgState.message}</p>
           ) : null}
@@ -141,7 +155,7 @@ export default function ServiceEditorCard({
           <div className="flex items-center gap-3">
             <button
               type="submit"
-              disabled={savePending || imgPending}
+              disabled={busy}
               className="rounded-lg bg-[#C4552D] px-4 py-2 text-sm font-medium text-[#FFF9F2] transition hover:bg-[#A3431F] disabled:opacity-60"
             >
               {savePending ? "Saving…" : "Save card"}

@@ -8,7 +8,7 @@ import {
 } from "@/app/admin/story-actions";
 import type { StoryPhoto } from "@/lib/story-photos";
 import {
-  runImport,
+  runLocalImport,
   initialProgress,
   type Progress,
 } from "./runImport";
@@ -56,9 +56,9 @@ export default function StoryGalleryManager({
   function start(files: FileList | File[]) {
     if (!files.length) return;
     setProg({ ...initialProgress });
-    runImport("story", (fd) => {
-      Array.from(files).forEach((f) => fd.append("file", f));
-    }, (p) => setProg((prev) => ({ ...(prev ?? initialProgress), ...p })));
+    runLocalImport("story", Array.from(files), (p) =>
+      setProg((prev) => ({ ...(prev ?? initialProgress), ...p }))
+    );
   }
 
   return (
