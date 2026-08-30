@@ -10,6 +10,7 @@ import type { StoryPhoto } from "@/lib/story-photos";
 import {
   runLocalImport,
   initialProgress,
+  formatBytes,
   type Progress,
 } from "./runImport";
 import {
@@ -79,7 +80,11 @@ export default function StoryGalleryManager({
             <div className="mb-1 flex justify-between text-xs font-medium text-[#6B6259]">
               <span className="truncate pr-3">{prog.name || "Uploading…"}</span>
               <span>
-                {prog.total > 0 ? `${prog.done} / ${prog.total} — ${prog.percent}%` : ""}
+                {prog.bytesTotal
+                  ? `${formatBytes(prog.bytesUploaded ?? 0)} / ${formatBytes(prog.bytesTotal)} — ${prog.percent}%`
+                  : prog.total > 0
+                  ? `${prog.done} / ${prog.total} — ${prog.percent}%`
+                  : ""}
               </span>
             </div>
             <div className="h-1.5 overflow-hidden rounded-full bg-[#1A1714]/10">

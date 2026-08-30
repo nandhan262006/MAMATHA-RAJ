@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import {
   runLocalImport,
   initialProgress,
+  formatBytes,
   type Progress,
 } from "./runImport";
 
@@ -57,7 +58,9 @@ export default function AddPhotoCard() {
         {prog?.phase === "working" ? (
           <div className="w-full px-3">
             <div className="mb-1 text-center text-xs font-medium text-[#6B6259]">
-              {prog.total > 0
+              {prog.bytesTotal
+                ? `${formatBytes(prog.bytesUploaded ?? 0)} / ${formatBytes(prog.bytesTotal)} — ${prog.percent}%`
+                : prog.total > 0
                 ? `${prog.done} / ${prog.total} — ${prog.percent}%`
                 : "Uploading…"}
             </div>

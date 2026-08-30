@@ -9,7 +9,21 @@ export type Progress = {
   total: number;
   name: string;
   message?: string;
+  bytesUploaded?: number;
+  bytesTotal?: number;
 };
+
+export function formatBytes(n: number): string {
+  if (!Number.isFinite(n) || n < 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  let i = 0;
+  let v = n;
+  while (v >= 1024 && i < units.length - 1) {
+    v /= 1024;
+    i++;
+  }
+  return `${v.toFixed(v >= 100 || i === 0 ? 0 : 1)} ${units[i]}`;
+}
 
 export const initialProgress: Progress = {
   phase: "working",
@@ -23,6 +37,7 @@ async function streamImport(
   fd: FormData,
   onProgress: (p: Partial<Progress>) => void
 ): Promise<void> {
+  onProgress({ bytesUploaded: undefined, bytesTotal: undefined });
   try {
     const res = await fetch("/api/admin/import", { method: "POST", body: fd });
     if (!res.ok || !res.body) {
@@ -94,36 +109,66 @@ export async function runDriveImport(
   await streamImport(fd, onProgress);
 }
 
+const UPLOAD_CONCURRENCY = 4;
+
 export async function runLocalImport(
   target: "photos" | "story",
   files: File[],
   onProgress: (p: Partial<Progress>) => void
 ): Promise<void> {
   const total = files.length;
-  const keys: string[] = [];
+  const results: (string | null)[] = new Array(total).fill(null);
+  const bytes: number[] = new Array(total).fill(0);
+  const totalBytes = files.reduce((s, f) => s + f.size, 0);
   let failed = 0;
+  let done = 0;
 
-  onProgress({ phase: "working", percent: 0, total, done: 0 });
+  onProgress({
+    phase: "working",
+    percent: 0,
+    total,
+    done: 0,
+    bytesTotal: totalBytes,
+    bytesUploaded: 0,
+  });
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    onProgress({
-      name: file.name,
-      done: i,
-      total,
-      percent: Math.round((i / total) * 100),
-    });
+  let idx = 0;
+  const workers = Array.from(
+    { length: Math.min(UPLOAD_CONCURRENCY, total) },
+    async () => {
+      while (true) {
+        const i = idx++;
+        if (i >= total) break;
+        const file = files[i];
+        const res = await uploadToR2(file, (loaded) => {
+          bytes[i] = loaded;
+          const uploadedBytes = bytes.reduce((s, b) => s + b, 0);
+          onProgress({
+            name: file.name,
+            done,
+            total,
+            bytesUploaded: uploadedBytes,
+            bytesTotal: totalBytes,
+            percent:
+              totalBytes > 0
+                ? Math.round((uploadedBytes / totalBytes) * 100)
+                : Math.round((done / total) * 100),
+          });
+        });
+        if (res.ok) results[i] = res.key;
+        else failed++;
+        done++;
+        onProgress({
+          done,
+          total,
+          name: file.name,
+        });
+      }
+    }
+  );
+  await Promise.all(workers);
 
-    const res = await uploadToR2(file);
-    if (res.ok) keys.push(res.key);
-    else failed++;
-
-    onProgress({
-      done: i + 1,
-      total,
-      percent: Math.round(((i + 1) / total) * 100),
-    });
-  }
+  const keys = results.filter((k): k is string => k !== null);
 
   const fd = new FormData();
   fd.set("target", target);
