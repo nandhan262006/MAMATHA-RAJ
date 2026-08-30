@@ -8,6 +8,7 @@ import {
   type StoryActionState,
 } from "@/app/admin/story-actions";
 import { useR2Upload } from "./useR2Upload";
+import { UploadProgressBar } from "./UploadProgressBar";
 import type { StoryContent } from "@/lib/story";
 
 const idle: StoryActionState = { status: "idle" };
@@ -64,7 +65,7 @@ function ImageSlot({
     replaceStoryImage,
     idle
   );
-  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
+  const { uploading, uploadError, progress, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
   const inputId = `story-file-${imageKey}`;
 
@@ -128,6 +129,13 @@ function ImageSlot({
       ) : (
         <p className="text-xs text-[#6B6259]">Original image in use</p>
       )}
+      {uploading && progress ? (
+        <UploadProgressBar
+          percent={progress.percent}
+          bytesUploaded={progress.bytesUploaded}
+          bytesTotal={progress.bytesTotal}
+        />
+      ) : null}
       {uploadError ? (
         <p className="text-xs text-[#A3431F]">{uploadError}</p>
       ) : null}

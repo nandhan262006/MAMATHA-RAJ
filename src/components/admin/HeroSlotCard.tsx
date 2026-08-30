@@ -7,6 +7,7 @@ import {
   type HeroActionState,
 } from "@/app/admin/hero-actions";
 import { useR2Upload } from "./useR2Upload";
+import { UploadProgressBar } from "./UploadProgressBar";
 
 const idle: HeroActionState = { status: "idle" };
 
@@ -27,7 +28,7 @@ export default function HeroSlotCard({
     resetHeroImage,
     idle
   );
-  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
+  const { uploading, uploadError, progress, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
 
   const state =
@@ -102,6 +103,13 @@ export default function HeroSlotCard({
           ) : null}
         </div>
 
+        {uploading && progress ? (
+          <UploadProgressBar
+            percent={progress.percent}
+            bytesUploaded={progress.bytesUploaded}
+            bytesTotal={progress.bytesTotal}
+          />
+        ) : null}
         {uploadError ? (
           <p className="text-xs text-[#A3431F]">{uploadError}</p>
         ) : null}

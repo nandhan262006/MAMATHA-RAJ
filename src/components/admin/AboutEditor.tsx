@@ -8,6 +8,7 @@ import {
   type AboutActionState,
 } from "@/app/admin/about-actions";
 import { useR2Upload } from "./useR2Upload";
+import { UploadProgressBar } from "./UploadProgressBar";
 import type { AboutContent } from "@/lib/about";
 
 const idle: AboutActionState = { status: "idle" };
@@ -56,7 +57,7 @@ export default function AboutEditor({ content }: { content: AboutContent }) {
     replaceAboutImage,
     idle
   );
-  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
+  const { uploading, uploadError, progress, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
@@ -120,6 +121,13 @@ export default function AboutEditor({ content }: { content: AboutContent }) {
             ) : (
               <p className="text-xs text-[#6B6259]">Original image in use</p>
             )}
+            {uploading && progress ? (
+              <UploadProgressBar
+                percent={progress.percent}
+                bytesUploaded={progress.bytesUploaded}
+                bytesTotal={progress.bytesTotal}
+              />
+            ) : null}
             {uploadError ? (
               <p className="text-xs text-[#A3431F]">{uploadError}</p>
             ) : null}

@@ -8,6 +8,7 @@ import {
 } from "@/app/admin/testimonial-actions";
 import { DeleteTestimonialButton } from "@/components/admin/TestimonialButtons";
 import { useR2Upload } from "./useR2Upload";
+import { UploadProgressBar } from "./UploadProgressBar";
 import type { Testimonial } from "@/lib/testimonials";
 
 const idle: TestimonialActionState = { status: "idle" };
@@ -27,7 +28,7 @@ export default function TestimonialEditorCard({
     replaceTestimonialImage,
     idle
   );
-  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
+  const { uploading, uploadError, progress, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
   const busy = imgPending || uploading || savePending;
 
@@ -99,6 +100,15 @@ export default function TestimonialEditorCard({
                   : "Upload image"}
             </button>
           </form>
+          {uploading && progress ? (
+            <div className="mt-2">
+              <UploadProgressBar
+                percent={progress.percent}
+                bytesUploaded={progress.bytesUploaded}
+                bytesTotal={progress.bytesTotal}
+              />
+            </div>
+          ) : null}
           {uploadError ? (
             <p className="mt-2 text-xs text-[#A3431F]">{uploadError}</p>
           ) : null}

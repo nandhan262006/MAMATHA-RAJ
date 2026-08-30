@@ -7,6 +7,7 @@ import {
   type OgImageActionState,
 } from "@/app/admin/og-image-actions";
 import { useR2Upload } from "./useR2Upload";
+import { UploadProgressBar } from "./UploadProgressBar";
 
 const idle: OgImageActionState = { status: "idle" };
 
@@ -18,7 +19,7 @@ export default function OgImageEditor({
   isCustom: boolean;
 }) {
   const [state, action, pending] = useActionState(replaceOgImage, idle);
-  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
+  const { uploading, uploadError, progress, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
   const busy = pending || uploading;
 
@@ -86,6 +87,13 @@ export default function OgImageEditor({
           ) : (
             <p className="text-xs text-[#6B6259]">Original image in use</p>
           )}
+          {uploading && progress ? (
+            <UploadProgressBar
+              percent={progress.percent}
+              bytesUploaded={progress.bytesUploaded}
+              bytesTotal={progress.bytesTotal}
+            />
+          ) : null}
           {uploadError ? (
             <p className="text-xs text-[#A3431F]">{uploadError}</p>
           ) : null}

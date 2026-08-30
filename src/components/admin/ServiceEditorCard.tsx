@@ -8,6 +8,7 @@ import {
 } from "@/app/admin/services-actions";
 import { DeleteServiceButton } from "@/components/admin/ServiceCardButtons";
 import { useR2Upload } from "./useR2Upload";
+import { UploadProgressBar } from "./UploadProgressBar";
 import type { ServiceCard } from "@/lib/services";
 
 const idle: ServiceActionState = { status: "idle" };
@@ -24,7 +25,7 @@ export default function ServiceEditorCard({
     replaceServiceImage,
     idle
   );
-  const { uploading, uploadError, keyRef, handleFile } = useR2Upload();
+  const { uploading, uploadError, progress, keyRef, handleFile } = useR2Upload();
   const formRef = useRef<HTMLFormElement>(null);
   const busy = imgPending || uploading || savePending;
 
@@ -96,6 +97,15 @@ export default function ServiceEditorCard({
                   : "Upload image"}
             </button>
           </form>
+          {uploading && progress ? (
+            <div className="mt-2">
+              <UploadProgressBar
+                percent={progress.percent}
+                bytesUploaded={progress.bytesUploaded}
+                bytesTotal={progress.bytesTotal}
+              />
+            </div>
+          ) : null}
           {uploadError ? (
             <p className="mt-2 text-xs text-[#A3431F]">{uploadError}</p>
           ) : null}
